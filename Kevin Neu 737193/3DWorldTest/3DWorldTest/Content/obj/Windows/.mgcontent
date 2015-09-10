@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>c:/users/kevin/documents/visual studio 2015/Projects/3DWorldTest/3DWorldTest/Content/Pinball.fbx</File>
+  </SourceFiles>
+</SourceFileCollection>
