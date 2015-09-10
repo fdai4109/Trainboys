@@ -17,7 +17,7 @@ namespace _3DWorldTest
 
         Model _pinball;
 
-        //Orbit
+        //Orbit oder nicht Orbit?
         bool orbit;  
 
         public Game1()
@@ -93,7 +93,7 @@ namespace _3DWorldTest
                 orbit = !orbit;
             }
 
-            //Kamera dreht sich automatisch um Target
+            //Kamera dreht sich automatisch um Target, Orbit
             if (orbit)
             {
                 Matrix rotationMatrix = Matrix.CreateRotationY(MathHelper.ToRadians(1f));
@@ -112,7 +112,6 @@ namespace _3DWorldTest
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    //effect.EnableDefaultLighting();
                     effect.AmbientLightColor = new Vector3(1f, 0, 0);
                     effect.View = viewMatrix;
                     effect.World = worldMatrix;

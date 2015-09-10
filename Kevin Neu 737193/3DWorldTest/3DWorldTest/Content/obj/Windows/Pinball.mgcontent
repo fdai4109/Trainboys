@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>c:/users/kevin/documents/visual studio 2015/Projects/3DWorldTest/3DWorldTest/Content/Pinball.fbx</SourceFile>
+  <SourceFile>D:/Studium/GDV/Trainboys/Kevin Neu 737193/3DWorldTest/3DWorldTest/Content/Pinball.fbx</SourceFile>
   <SourceTime>2015-09-10T12:23:41.079583+02:00</SourceTime>
-  <DestFile>c:/users/kevin/documents/visual studio 2015/Projects/3DWorldTest/3DWorldTest/Content/bin/Windows/Pinball.xnb</DestFile>
-  <DestTime>2015-09-10T13:28:43.630194+02:00</DestTime>
+  <DestFile>D:/Studium/GDV/Trainboys/Kevin Neu 737193/3DWorldTest/3DWorldTest/Content/bin/Windows/Pinball.xnb</DestFile>
+  <DestTime>2015-09-10T13:39:01.284624+02:00</DestTime>
   <Importer>FbxImporter</Importer>
   <ImporterTime>2015-04-29T19:14:44+02:00</ImporterTime>
   <Processor>ModelProcessor</Processor>
