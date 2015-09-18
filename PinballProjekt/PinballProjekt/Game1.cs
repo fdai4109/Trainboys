@@ -16,7 +16,7 @@ namespace PinballProjekt
         //Matrix worldMatrix;
 
         Vector3 _platteLocation = new Vector3(0f, 0f, 0f);
-        Vector3 _pinballLocation = new Vector3(100f, 100f, 0f);
+        Vector3 _pinballLocation = new Vector3(0f, 0f, 0f);
 
         Model _pinball;
         Model _platte;
@@ -27,8 +27,8 @@ namespace PinballProjekt
         float _streckeY;
 
         float _timer = 0f;
-        float _velocityX = -0.5f;
-        float _velocityY = -0.2f;
+        float _velocityX = -0.3f;
+        float _velocityY = -0.5f;
 
         //Orbit oder nicht Orbit?
         bool orbit;
@@ -87,18 +87,32 @@ namespace PinballProjekt
             if (_timer >= 200f)
             {
                 _pinballLocationOLD = _pinballLocation;
-                _velocityX *= 0.9f;
-                _velocityY *= 0.9f;
+                /*_velocityX *= 0.9f;
+                _velocityY *= 0.9f;*/
                 _timer = 0f;
             }
 
-            if (IsCollision(_pinball, _pinballMatrix, _platte, _platteMatrix))
+            if(EdgeCollisionObenUnten())
+            {
+                //_pinballLocation += einfall(_pinballLocationOLD, _collisionPosition);
+                _velocityX *= 1;
+                _velocityY *= -1;
+                System.Diagnostics.Debug.WriteLine("Collision");
+            }
+
+            if(EdgeCollisionRechtsLinks())
+            {
+                _velocityX *= -1;
+                _velocityY *= 1;
+            }
+
+            /*if (IsCollision(_pinball, _pinballMatrix, _platte, _platteMatrix))
             {
                 _pinballLocation += einfall(_pinballLocationOLD, _collisionPosition);
                 _velocityX *= 1;
                 _velocityY *= -1;
                 System.Diagnostics.Debug.WriteLine("ISCOLLI");
-            }
+            }*/
 
             //Kugel-Bewegung
             if (Keyboard.GetState().IsKeyDown(Keys.A))
@@ -181,6 +195,39 @@ namespace PinballProjekt
                         return true;
                     }
                 }
+            }
+            return false;
+        }
+
+        private bool EdgeCollisionObenUnten()
+        {
+            
+             if(_pinballLocation.Y >= 100)
+            {
+                _collisionPosition = _pinballLocation;
+                return true;
+            }
+            else if(_pinballLocation.Y <= -100)
+            {
+                _collisionPosition = _pinballLocation;
+                return true;
+            }
+            
+            
+                return false;
+        }
+
+        private bool EdgeCollisionRechtsLinks()
+        {
+            if (_pinballLocation.X >= 100)
+            {
+                _collisionPosition = _pinballLocation;
+                return true;
+            }
+            else if (_pinballLocation.X <= -100)
+            {
+                _collisionPosition = _pinballLocation;
+                return true;
             }
             return false;
         }
