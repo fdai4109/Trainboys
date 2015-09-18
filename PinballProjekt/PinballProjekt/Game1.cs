@@ -16,15 +16,19 @@ namespace PinballProjekt
         //Matrix worldMatrix;
 
         Vector3 _platteLocation = new Vector3(0f, 0f, 0f);
-        Vector3 _pinballLocation = new Vector3(0f, 100f, 0f);
+        Vector3 _pinballLocation = new Vector3(100f, 100f, 0f);
 
         Model _pinball;
         Model _platte;
 
         Vector3 _collisionPosition;
         Vector3 _pinballLocationOLD = new Vector3(0f, 0f, 0f);
+        float _streckeX;
+        float _streckeY;
 
         float _timer = 0f;
+        float _velocityX = -0.5f;
+        float _velocityY = -0.2f;
 
         //Orbit oder nicht Orbit?
         bool orbit;
@@ -72,17 +76,27 @@ namespace PinballProjekt
             Matrix _pinballMatrix = Matrix.CreateTranslation(_pinballLocation);
             Matrix _platteMatrix = Matrix.CreateTranslation(_platteLocation);
 
-            _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+           /* _streckeX = _pinballLocationOLD.X - _pinballLocation.X;
+            _streckeY = _pinballLocationOLD.Y - _pinballLocation.Y;
 
-            if (_timer >= 2f)
+            _velocityX = _streckeX / _timer;
+            _velocityY = _streckeY / _timer;*/
+
+            _timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (_timer >= 200f)
             {
-                _pinballLocationOLD.Y = _pinballLocation.Y;
+                _pinballLocationOLD = _pinballLocation;
+                _velocityX *= 0.9f;
+                _velocityY *= 0.9f;
                 _timer = 0f;
             }
 
             if (IsCollision(_pinball, _pinballMatrix, _platte, _platteMatrix))
             {
-                _pinballLocation.Y += einfall(_pinballLocationOLD, _collisionPosition).Y;
+                _pinballLocation += einfall(_pinballLocationOLD, _collisionPosition);
+                _velocityX *= 1;
+                _velocityY *= -1;
                 System.Diagnostics.Debug.WriteLine("ISCOLLI");
             }
 
@@ -130,13 +144,23 @@ namespace PinballProjekt
 
             System.Diagnostics.Debug.WriteLine(_pinballLocation.Y + " - Aktuell Y");
             System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.Y + " - Alt Y");
+            System.Diagnostics.Debug.WriteLine(_pinballLocation.X + " - Aktuell X");
+            System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.X + " - Alt X");
+            System.Diagnostics.Debug.WriteLine(_pinballLocation.Z + " - AKtuell Z");
+            System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.Z + "- Alt Z ");
+
+            System.Diagnostics.Debug.WriteLine(_velocityX + "- Vel X");
+            System.Diagnostics.Debug.WriteLine(_velocityY + "- Vel Y");
+
+            _pinballLocation.Y += _velocityY;
+            _pinballLocation.X += _velocityX;
 
             base.Update(gameTime);
         }
 
         private Vector3 einfall(Vector3 a, Vector3 b)
         {
-            return new Vector3((float)b.X - a.X, (float)b.Y - a.Y, (float)b.Z - a.Z);
+            return new Vector3(a.X - b.X, a.Y - b.Y, a.Z - b.Z)*5;
         }
 
         private bool IsCollision(Model model1, Matrix world1, Model model2, Matrix world2)
