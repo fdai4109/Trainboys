@@ -17,9 +17,11 @@ namespace PinballProjekt
 
         Vector3 _platteLocation = new Vector3(0f, 0f, 0f);
         Vector3 _pinballLocation = new Vector3(0f, 0f, 0f);
+        Vector3 _triggerLocation = new Vector3(5f, 20f, -30f);
 
         Model _pinball;
         Model _platte;
+        Model _trigger;
 
         Vector3 _collisionPosition;
         Vector3 _pinballLocationOLD = new Vector3(0f, 0f, 0f);
@@ -28,7 +30,7 @@ namespace PinballProjekt
 
         float _timer = 0f;
         float _velocityX = -0.3f;
-        float _velocityY = -0.5f;
+        float _velocityZ = -0.5f;
 
         //Orbit oder nicht Orbit?
         bool orbit;
@@ -53,7 +55,7 @@ namespace PinballProjekt
 
             _pinball = Content.Load<Model>("Pinball");
             _platte = Content.Load<Model>("Platte");
-
+            _trigger = Content.Load<Model>("Trigger");
         }
 
 
@@ -75,7 +77,7 @@ namespace PinballProjekt
 
             Matrix _pinballMatrix = Matrix.CreateTranslation(_pinballLocation);
             Matrix _platteMatrix = Matrix.CreateTranslation(_platteLocation);
-
+            Matrix _triggerMatrix = Matrix.CreateTranslation(_triggerLocation);
            /* _streckeX = _pinballLocationOLD.X - _pinballLocation.X;
             _streckeY = _pinballLocationOLD.Y - _pinballLocation.Y;
 
@@ -96,14 +98,14 @@ namespace PinballProjekt
             {
                 //_pinballLocation += einfall(_pinballLocationOLD, _collisionPosition);
                 _velocityX *= 1;
-                _velocityY *= -1;
+                _velocityZ *= -1;
                 System.Diagnostics.Debug.WriteLine("Collision");
             }
 
             if(EdgeCollisionRechtsLinks())
             {
                 _velocityX *= -1;
-                _velocityY *= 1;
+                _velocityZ *= 1;
             }
 
             /*if (IsCollision(_pinball, _pinballMatrix, _platte, _platteMatrix))
@@ -164,9 +166,9 @@ namespace PinballProjekt
             System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.Z + "- Alt Z ");
 
             System.Diagnostics.Debug.WriteLine(_velocityX + "- Vel X");
-            System.Diagnostics.Debug.WriteLine(_velocityY + "- Vel Y");
+            System.Diagnostics.Debug.WriteLine(_velocityZ + "- Vel Y");
 
-            _pinballLocation.Y += _velocityY;
+            _pinballLocation.Z += _velocityZ;
             _pinballLocation.X += _velocityX;
 
             base.Update(gameTime);
@@ -202,12 +204,12 @@ namespace PinballProjekt
         private bool EdgeCollisionObenUnten()
         {
             
-             if(_pinballLocation.Y >= 100)
+             if(_pinballLocation.Z >= 48)
             {
                 _collisionPosition = _pinballLocation;
                 return true;
             }
-            else if(_pinballLocation.Y <= -100)
+            else if(_pinballLocation.Z <= -48)
             {
                 _collisionPosition = _pinballLocation;
                 return true;
@@ -219,12 +221,12 @@ namespace PinballProjekt
 
         private bool EdgeCollisionRechtsLinks()
         {
-            if (_pinballLocation.X >= 100)
+            if (_pinballLocation.X >= 23)
             {
                 _collisionPosition = _pinballLocation;
                 return true;
             }
-            else if (_pinballLocation.X <= -100)
+            else if (_pinballLocation.X <= -23)
             {
                 _collisionPosition = _pinballLocation;
                 return true;
@@ -238,10 +240,11 @@ namespace PinballProjekt
 
             Matrix _platteMatrix = Matrix.CreateTranslation(_platteLocation);
             Matrix _pinballMatrix = Matrix.CreateTranslation(_pinballLocation);
+            Matrix _triggerMatrix = Matrix.CreateTranslation(_triggerLocation);
 
             DrawModel(_platte, _platteMatrix, viewMatrix, projectionMatrix);
             DrawModel(_pinball, _pinballMatrix, viewMatrix, projectionMatrix);
-
+            DrawModel(_trigger, _triggerMatrix, viewMatrix, projectionMatrix);
             /*foreach (ModelMesh mesh in _pinball.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
