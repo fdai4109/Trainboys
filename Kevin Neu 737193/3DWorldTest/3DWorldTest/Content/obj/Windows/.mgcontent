@@ -4,7 +4,9 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Christian/Desktop/Trainboys/Kevin Neu 737193/3DWorldTest/3DWorldTest/Content/Platte.fbx</File>
-    <File>C:/Users/Christian/Desktop/Trainboys/Kevin Neu 737193/3DWorldTest/3DWorldTest/Content/Pinball.fbx</File>
+    <File>D:/Studium/GDV/Trainboys/Kevin Neu 737193/3DWorldTest/3DWorldTest/Content/Platte.fbx</File>
+    <File>D:/Studium/GDV/Trainboys/Kevin Neu 737193/3DWorldTest/3DWorldTest/Content/Pinball.fbx</File>
+    <File>D:/Studium/GDV/Trainboys/Kevin Neu 737193/3DWorldTest/3DWorldTest/Content/TriggerR.fbx</File>
+    <File>D:/Studium/GDV/Trainboys/Kevin Neu 737193/3DWorldTest/3DWorldTest/Content/TriggerL.fbx</File>
   </SourceFiles>
 </SourceFileCollection>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Christian/Desktop/Trainboys/Kevin Neu 737193/3DWorldTest/3DWorldTest/Content/Platte.fbx</SourceFile>
+  <SourceFile>D:/Studium/GDV/Trainboys/Kevin Neu 737193/3DWorldTest/3DWorldTest/Content/Platte.fbx</SourceFile>
   <SourceTime>2015-09-15T16:47:19.6221752+02:00</SourceTime>
-  <DestFile>C:/Users/Christian/Desktop/Trainboys/Kevin Neu 737193/3DWorldTest/3DWorldTest/Content/bin/Windows/Platte.xnb</DestFile>
-  <DestTime>2015-09-18T12:19:54.5428655+02:00</DestTime>
+  <DestFile>D:/Studium/GDV/Trainboys/Kevin Neu 737193/3DWorldTest/3DWorldTest/Content/bin/Windows/Platte.xnb</DestFile>
+  <DestTime>2015-09-20T21:18:38.0119835+02:00</DestTime>
   <Importer>FbxImporter</Importer>
   <ImporterTime>2015-04-29T19:14:44+02:00</ImporterTime>
   <Processor>ModelProcessor</Processor>
