@@ -29,7 +29,7 @@ namespace PinballProjekt
         float _streckeY;
 
         float _timer = 0f;
-        float _velocityX = -0.3f;
+        float _velocityX = -0.8f;
         float _velocityZ = -0.5f;
 
         //Orbit oder nicht Orbit?
