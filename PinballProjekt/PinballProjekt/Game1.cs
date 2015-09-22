@@ -19,11 +19,13 @@ namespace PinballProjekt
         Vector3 _pinballLocation = new Vector3(0f, 0f, 0f);
         Vector3 _triggerRLocation = new Vector3(-10f, -1f, -40f);
         Vector3 _triggerLLocation = new Vector3(10f, -1f, -40f);
+        Vector3 _bumperLocation = new Vector3(0f, -1f, 0f);
 
         Model _pinball;
         Model _platte;
         Model _triggerR;
         Model _triggerL;
+        Model _bumper;
 
         Vector3 _collisionPosition;
         Vector3 _pinballLocationOLD = new Vector3(0f, 0f, 0f);
@@ -59,6 +61,7 @@ namespace PinballProjekt
             _platte = Content.Load<Model>("Platte");
             _triggerR = Content.Load<Model>("Trigger");
             _triggerL = Content.Load<Model>("Trigger");
+            _bumper = Content.Load<Model>("Bumper");
         }
 
 
@@ -82,6 +85,7 @@ namespace PinballProjekt
             Matrix _platteMatrix = Matrix.CreateTranslation(_platteLocation);
             Matrix _triggerRMatrix = Matrix.CreateTranslation(_triggerRLocation);
             Matrix _triggerLMatrix = Matrix.CreateTranslation(_triggerLLocation);
+            Matrix _bumperMatrix = Matrix.CreateTranslation(_bumperLocation);
 
             /* _streckeX = _pinballLocationOLD.X - _pinballLocation.X;
              _streckeY = _pinballLocationOLD.Y - _pinballLocation.Y;
@@ -247,11 +251,13 @@ namespace PinballProjekt
             Matrix _pinballMatrix = Matrix.CreateTranslation(_pinballLocation);
             Matrix _triggerRMatrix = Matrix.CreateTranslation(_triggerRLocation);
             Matrix _triggerLMatrix = Matrix.CreateTranslation(_triggerLLocation);
+            Matrix _bumperMatrix = Matrix.CreateTranslation(_bumperLocation);
 
             DrawModel(_platte, _platteMatrix, viewMatrix, projectionMatrix);
             DrawModel(_pinball, _pinballMatrix, viewMatrix, projectionMatrix);
             DrawModel(_triggerR, _triggerRMatrix, viewMatrix, projectionMatrix);
             DrawModel(_triggerL, _triggerLMatrix, viewMatrix, projectionMatrix);
+            DrawModel(_bumper, _bumperMatrix, viewMatrix, projectionMatrix);
             /*foreach (ModelMesh mesh in _pinball.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
