@@ -21,6 +21,8 @@ namespace PinballProjekt
         Vector3 _triggerLLocation = new Vector3(10f, -1f, -40f);
         Vector3 _bumperLocation = new Vector3(0f, -1f, 0f);
 
+        Rectangle BoundingBox;
+
         Model _pinball;
         Model _platte;
         Model _triggerR;
@@ -33,17 +35,20 @@ namespace PinballProjekt
         //float _streckeY;
 
         float _timer = 0f;
-        float _velocityX = -0.8f;
+        float _velocityX = -0.3f;
         float _velocityZ = -0.5f;
 
         //Orbit oder nicht Orbit?
         bool orbit;
 
-        public Game1(Vector2 Offset, Vector2 size)
+        public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
+        
+        
+        
 
         protected override void Initialize()
         {
@@ -115,6 +120,20 @@ namespace PinballProjekt
             {
                 _velocityX *= -1;
                 //_velocityZ *= 1;
+            }
+
+            if(Rtrigger())
+            {
+                _velocityX *= -1;
+                _velocityZ *= -1;
+                System.Diagnostics.Debug.WriteLine("KEINE COLLISION");
+            }
+
+            if(Ltrigger())
+            {
+                _velocityX *= -1;
+                _velocityZ *= -1;
+                System.Diagnostics.Debug.WriteLine("KEINE COLLISION");
             }
 
             /*if (IsCollision(_pinball, _pinballMatrix, _platte, _platteMatrix))
@@ -210,6 +229,32 @@ namespace PinballProjekt
             return false;
         }
 
+        private bool Rtrigger()
+        {
+            if(_pinballLocation.Z <= -39f && _pinballLocation.Z >=-41f)
+            {
+                if(_pinballLocation.X <= -5f && _pinballLocation.X >= -15f)
+                {
+                    return true;
+                }
+                
+            }
+            return false;
+        }
+
+        private bool Ltrigger()
+        {
+            if (_pinballLocation.Z <= -39f && _pinballLocation.Z >= -41f)
+            {
+                if (_pinballLocation.X >= 5f && _pinballLocation.X <= 15f)
+                {
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
         private bool EdgeCollisionObenUnten()
         {
             
@@ -242,6 +287,14 @@ namespace PinballProjekt
             }
             return false;
         }
+
+        public Rectangle Box(int x, int y, int breite, int höhe)
+        {
+            Rectangle collision = new Rectangle(x, y, breite, höhe);
+            return collision;
+        }
+
+        
 
         protected override void Draw(GameTime gameTime)
         {
