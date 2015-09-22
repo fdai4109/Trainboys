@@ -39,7 +39,7 @@ namespace PinballProjekt
         //Orbit oder nicht Orbit?
         bool orbit;
 
-        public Game1()
+        public Game1(Vector2 Offset, Vector2 size)
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
