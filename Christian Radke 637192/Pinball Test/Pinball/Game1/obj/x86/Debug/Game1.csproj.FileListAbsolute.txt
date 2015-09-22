@@ -24,3 +24,5 @@ D:\Desktop\PinballProjekt\Pinball\Game1\bin\Windows\Debug\SharpDX.Direct3D9.xml
 D:\Desktop\PinballProjekt\Pinball\Game1\obj\x86\Debug\Game1.exe
 D:\Desktop\PinballProjekt\Pinball\Game1\obj\x86\Debug\Game1.pdb
 D:\Desktop\PinballProjekt\Pinball\Game1\bin\Windows\Debug\Content\untitled.xnb
+D:\Desktop\Trainboys\Christian Radke 637192\Pinball Test\Pinball\Game1\obj\x86\Debug\Game1.exe
+D:\Desktop\Trainboys\Christian Radke 637192\Pinball Test\Pinball\Game1\obj\x86\Debug\Game1.pdb
