@@ -194,7 +194,7 @@ namespace PinballProjekt
             }
             viewMatrix = Matrix.CreateLookAt(camPosition, camTarget, Vector3.Up);
 
-            /*System.Diagnostics.Debug.WriteLine(_pinballLocation.Y + " - Aktuell Y");
+            System.Diagnostics.Debug.WriteLine(_pinballLocation.Y + " - Aktuell Y");
             System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.Y + " - Alt Y");
             System.Diagnostics.Debug.WriteLine(_pinballLocation.X + " - Aktuell X");
             System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.X + " - Alt X");
@@ -202,7 +202,7 @@ namespace PinballProjekt
             System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.Z + "- Alt Z ");
 
             System.Diagnostics.Debug.WriteLine(_velocityX + "- Vel X");
-            System.Diagnostics.Debug.WriteLine(_velocityZ + "- Vel Y");)*/
+            System.Diagnostics.Debug.WriteLine(_velocityZ + "- Vel Y");
 
             _pinballLocation.Z += _velocityZ;
             _pinballLocation.X += _velocityX;
