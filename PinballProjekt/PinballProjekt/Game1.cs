@@ -19,7 +19,7 @@ namespace PinballProjekt
         Vector3 _pinballLocation = new Vector3(0f, 0f, 0f);
         Vector3 _triggerRLocation = new Vector3(-10f, -1f, -40f);
         Vector3 _triggerLLocation = new Vector3(10f, -1f, -40f);
-        Vector3 _bumperLocation = new Vector3(0f, -1f, 0f);
+        Vector3 _bumperLocation = new Vector3(0f, 0f, 0f);
 
         Rectangle BoundingBox;
 
@@ -56,7 +56,8 @@ namespace PinballProjekt
 
             //Kamera-Setup
             camTarget = new Vector3(0f, 0f, 0f);
-            camPosition = new Vector3(0f, 100f, -180f);
+            //camPosition = new Vector3(0f, 100f, -180f);
+            camPosition = new Vector3(0f, 150f, -1f);
 
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), GraphicsDevice.DisplayMode.AspectRatio, 1f, 1000f);
             viewMatrix = Matrix.CreateLookAt(camPosition, camTarget, Vector3.Up);
@@ -124,16 +125,23 @@ namespace PinballProjekt
 
             if(Rtrigger())
             {
-                _velocityX *= -1;
+                _velocityX *= 1;
                 _velocityZ *= -1;
                 System.Diagnostics.Debug.WriteLine("KEINE COLLISION");
             }
 
             if(Ltrigger())
             {
-                _velocityX *= -1;
+                _velocityX *= 1;
                 _velocityZ *= -1;
                 System.Diagnostics.Debug.WriteLine("KEINE COLLISION");
+            }
+
+            if (Bumper())
+            {
+                _velocityX *= 1;
+                _velocityZ *= -1;
+                System.Diagnostics.Debug.WriteLine(_pinballLocation);
             }
 
             /*if (IsCollision(_pinball, _pinballMatrix, _platte, _platteMatrix))
@@ -186,7 +194,7 @@ namespace PinballProjekt
             }
             viewMatrix = Matrix.CreateLookAt(camPosition, camTarget, Vector3.Up);
 
-            System.Diagnostics.Debug.WriteLine(_pinballLocation.Y + " - Aktuell Y");
+            /*System.Diagnostics.Debug.WriteLine(_pinballLocation.Y + " - Aktuell Y");
             System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.Y + " - Alt Y");
             System.Diagnostics.Debug.WriteLine(_pinballLocation.X + " - Aktuell X");
             System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.X + " - Alt X");
@@ -194,7 +202,7 @@ namespace PinballProjekt
             System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.Z + "- Alt Z ");
 
             System.Diagnostics.Debug.WriteLine(_velocityX + "- Vel X");
-            System.Diagnostics.Debug.WriteLine(_velocityZ + "- Vel Y");
+            System.Diagnostics.Debug.WriteLine(_velocityZ + "- Vel Y");)*/
 
             _pinballLocation.Z += _velocityZ;
             _pinballLocation.X += _velocityX;
@@ -271,6 +279,19 @@ namespace PinballProjekt
             
             
                 return false;
+        }
+
+        private bool Bumper()
+        {
+            if (_pinballLocation.Z <= 2f && _pinballLocation.Z >= -2f)
+            {
+                if (_pinballLocation.X <= 2f && _pinballLocation.X >= -2f)
+                {
+                    return true;
+                }
+
+            }
+            return false;
         }
 
         private bool EdgeCollisionRechtsLinks()
