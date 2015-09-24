@@ -56,8 +56,9 @@ namespace PinballProjekt
 
             //Kamera-Setup
             camTarget = new Vector3(0f, 0f, 0f);
-            //camPosition = new Vector3(0f, 100f, -180f);
-            camPosition = new Vector3(0f, 150f, -1f);
+            //camPosition = new Vector3(0f, 100f, -180f); //Anfangsposition: Schräge Sicht
+            //camPosition = new Vector3(0f, 150f, -1f); //Draufsicht
+            camPosition = new Vector3(0f, 0.5f, 10f); //Bumperansicht
 
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), GraphicsDevice.DisplayMode.AspectRatio, 1f, 1000f);
             viewMatrix = Matrix.CreateLookAt(camPosition, camTarget, Vector3.Up);
@@ -287,6 +288,7 @@ namespace PinballProjekt
             {
                 if (_pinballLocation.X <= 2f && _pinballLocation.X >= -2f)
                 {
+                    BumperReaktion();
                     return true;
                 }
 
@@ -315,7 +317,21 @@ namespace PinballProjekt
             return collision;
         }
 
-        
+        public void BumperReaktion()
+        {
+            /*do
+            {
+                if (_bumperLocation.Y >= -1f)
+                {
+                    _bumperLocation.Y -= 0.1f;
+                }
+                else if (_bumperLocation.Y <= 0f)
+                {
+                    _bumperLocation.Y += 0.1f;
+                }
+                
+            } while (_bumperLocation.Y < 0f);*/
+        }
 
         protected override void Draw(GameTime gameTime)
         {
