@@ -52,4 +52,4 @@ namespace PinballProjekt.Game1.BoxCollider
         }
     }
 
-} //für Kevin
+}

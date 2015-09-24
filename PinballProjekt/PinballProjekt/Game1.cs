@@ -39,7 +39,7 @@ namespace PinballProjekt
         //Orbit oder nicht Orbit?
         bool orbit;
 
-        public Game1(Vector2 Offset, Vector2 size)
+        public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -212,7 +212,6 @@ namespace PinballProjekt
 
         private bool EdgeCollisionObenUnten()
         {
-            
              if(_pinballLocation.Z >= 48)
             {
                 _collisionPosition = _pinballLocation;
@@ -243,6 +242,12 @@ namespace PinballProjekt
             return false;
         }
 
+        private Rectangle drawRectangle(int x, int y, int breite, int tiefe)
+        {
+            Rectangle colli = new Rectangle(x, y, breite, tiefe);
+            return colli;
+        }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -258,6 +263,7 @@ namespace PinballProjekt
             DrawModel(_triggerR, _triggerRMatrix, viewMatrix, projectionMatrix);
             DrawModel(_triggerL, _triggerLMatrix, viewMatrix, projectionMatrix);
             DrawModel(_bumper, _bumperMatrix, viewMatrix, projectionMatrix);
+
             /*foreach (ModelMesh mesh in _pinball.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
