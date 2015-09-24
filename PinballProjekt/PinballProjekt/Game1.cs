@@ -19,7 +19,12 @@ namespace PinballProjekt
         Vector3 _pinballLocation = new Vector3(0f, 0f, 0f);
         Vector3 _triggerRLocation = new Vector3(-10f, -1f, -40f);
         Vector3 _triggerLLocation = new Vector3(10f, -1f, -40f);
-        Vector3 _bumperLocation = new Vector3(0f, 0f, 0f);
+        Vector3 _bumperLocation = new Vector3(0f, 0f, 20f);
+        Vector3 _bumper2Location = new Vector3(8f, 0f, 25f);
+        Vector3 _bumper3Location = new Vector3(-8f, 0f, 25f);
+        Vector3 _bumper4Location = new Vector3(0f, 0f, 30f);
+        Vector3 _sideBumperLLocation = new Vector3(15f, -1f, -10f);
+        Vector3 _sideBumperRLocation = new Vector3(-15f, -1f, -10f);
 
         Rectangle BoundingBox;
 
@@ -28,6 +33,11 @@ namespace PinballProjekt
         Model _triggerR;
         Model _triggerL;
         Model _bumper;
+        Model _bumper2;
+        Model _bumper3;
+        Model _bumper4;
+        Model _sideBumperR;
+        Model _sideBumperL;
 
         Vector3 _collisionPosition;
         Vector3 _pinballLocationOLD = new Vector3(0f, 0f, 0f);
@@ -56,9 +66,9 @@ namespace PinballProjekt
 
             //Kamera-Setup
             camTarget = new Vector3(0f, 0f, 0f);
-            //camPosition = new Vector3(0f, 100f, -180f); //Anfangsposition: Schräge Sicht
+            camPosition = new Vector3(0f, 100f, -180f); //Anfangsposition: Schräge Sicht
             //camPosition = new Vector3(0f, 150f, -1f); //Draufsicht
-            camPosition = new Vector3(0f, 0.5f, 10f); //Bumperansicht
+            //camPosition = new Vector3(0f, 0.5f, 10f); //Bumperansicht
 
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), GraphicsDevice.DisplayMode.AspectRatio, 1f, 1000f);
             viewMatrix = Matrix.CreateLookAt(camPosition, camTarget, Vector3.Up);
@@ -69,6 +79,11 @@ namespace PinballProjekt
             _triggerR = Content.Load<Model>("Trigger");
             _triggerL = Content.Load<Model>("Trigger");
             _bumper = Content.Load<Model>("Bumper");
+            _bumper2 = Content.Load<Model>("Bumper");
+            _bumper3 = Content.Load<Model>("Bumper");
+            _bumper4 = Content.Load<Model>("Bumper");
+            _sideBumperR = Content.Load<Model>("SideBumper");
+            _sideBumperL = Content.Load<Model>("SideBumper");
         }
 
 
@@ -93,6 +108,11 @@ namespace PinballProjekt
             Matrix _triggerRMatrix = Matrix.CreateTranslation(_triggerRLocation);
             Matrix _triggerLMatrix = Matrix.CreateTranslation(_triggerLLocation);
             Matrix _bumperMatrix = Matrix.CreateTranslation(_bumperLocation);
+            Matrix _bumper2Matrix = Matrix.CreateTranslation(_bumper2Location);
+            Matrix _bumper3Matrix = Matrix.CreateTranslation(_bumper3Location);
+            Matrix _bumper4Matrix = Matrix.CreateTranslation(_bumper4Location);
+            Matrix _sideBumperLMatrix = Matrix.CreateTranslation(_sideBumperLLocation);
+            Matrix _sideBumperRMatrix = Matrix.CreateTranslation(_sideBumperRLocation);
 
             /* _streckeX = _pinballLocationOLD.X - _pinballLocation.X;
              _streckeY = _pinballLocationOLD.Y - _pinballLocation.Y;
@@ -105,8 +125,7 @@ namespace PinballProjekt
             if (_timer >= 200f)
             {
                 _pinballLocationOLD = _pinballLocation;
-                /*_velocityX *= 0.9f;
-                _velocityY *= 0.9f;*/
+                _velocityZ -= 0.07f;
                 _timer = 0f;
             }
 
@@ -126,19 +145,50 @@ namespace PinballProjekt
 
             if(Rtrigger())
             {
-                _velocityX *= 1;
-                _velocityZ *= -1;
+                _velocityX *= 1f;
+                _velocityZ *= -1f;
                 System.Diagnostics.Debug.WriteLine("KEINE COLLISION");
             }
 
             if(Ltrigger())
             {
-                _velocityX *= 1;
-                _velocityZ *= -1;
+                _velocityX *= 1f;
+                _velocityZ *= -1f;
                 System.Diagnostics.Debug.WriteLine("KEINE COLLISION");
             }
 
+            if(LsideBumper())
+            {
+                _velocityX *= -1;
+            }
+
+            if(RsideBumper())
+            {
+                _velocityX *= -1;
+            }
+
             if (Bumper())
+            {
+                _velocityX *= 1;
+                _velocityZ *= -1;
+                System.Diagnostics.Debug.WriteLine(_pinballLocation);
+            }
+
+            if (Bumper2())
+            {
+                _velocityX *= 1;
+                _velocityZ *= -1;
+                System.Diagnostics.Debug.WriteLine(_pinballLocation);
+            }
+
+            if (Bumper3())
+            {
+                _velocityX *= 1;
+                _velocityZ *= -1;
+                System.Diagnostics.Debug.WriteLine(_pinballLocation);
+            }
+
+            if (Bumper4())
             {
                 _velocityX *= 1;
                 _velocityZ *= -1;
@@ -186,7 +236,12 @@ namespace PinballProjekt
             {
                 orbit = !orbit;
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.L))
+            {
+                Vector3 _triggerLLocation = new Vector3(15f, -1f, -30f);
+                System.Diagnostics.Debug.WriteLine("GEDRÜCKT");
 
+            }
             //Kamera dreht sich automatisch um Target, Orbit
             if (orbit)
             {
@@ -264,6 +319,30 @@ namespace PinballProjekt
             return false;
         }
 
+        private bool LsideBumper()
+        {
+            if(_pinballLocation.Z <=-6 && _pinballLocation.Z >= -14)
+            {
+                if(_pinballLocation.X >= 13 && _pinballLocation.X <=17)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool RsideBumper()
+        {
+            if (_pinballLocation.Z <= -6 && _pinballLocation.Z >= -14)
+            {
+                if (_pinballLocation.X >= -17 && _pinballLocation.X <= -13)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private bool EdgeCollisionObenUnten()
         {
             
@@ -284,14 +363,53 @@ namespace PinballProjekt
 
         private bool Bumper()
         {
-            if (_pinballLocation.Z <= 2f && _pinballLocation.Z >= -2f)
+            if (_pinballLocation.Z <= 22f && _pinballLocation.Z >= 18f)
             {
                 if (_pinballLocation.X <= 2f && _pinballLocation.X >= -2f)
                 {
-                    BumperReaktion();
+                    //BumperReaktion();
                     return true;
                 }
 
+            }
+            return false;
+        }
+
+        private bool Bumper2()
+        {
+            if (_pinballLocation.Z <= 27f && _pinballLocation.Z >= 23f)
+            {
+                if (_pinballLocation.X <= 10f && _pinballLocation.X >= 6f)
+                {
+                    //BumperReaktion();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool Bumper3()
+        {
+            if (_pinballLocation.Z <= 27f && _pinballLocation.Z >= 23f)
+            {
+                if (_pinballLocation.X <= -10f && _pinballLocation.X >= -6f)
+                {
+                    //BumperReaktion();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool Bumper4()
+        {
+            if (_pinballLocation.Z <= 32f && _pinballLocation.Z >= 28f)
+            {
+                if (_pinballLocation.X <= 2f && _pinballLocation.X >= -2f)
+                {
+                    //BumperReaktion();
+                    return true;
+                }
             }
             return false;
         }
@@ -342,12 +460,22 @@ namespace PinballProjekt
             Matrix _triggerRMatrix = Matrix.CreateTranslation(_triggerRLocation);
             Matrix _triggerLMatrix = Matrix.CreateTranslation(_triggerLLocation);
             Matrix _bumperMatrix = Matrix.CreateTranslation(_bumperLocation);
+            Matrix _bumper2Matrix = Matrix.CreateTranslation(_bumper2Location);
+            Matrix _bumper3Matrix = Matrix.CreateTranslation(_bumper3Location);
+            Matrix _bumper4Matrix = Matrix.CreateTranslation(_bumper4Location);
+            Matrix _sideBumperLMatrix = Matrix.CreateTranslation(_sideBumperLLocation);
+            Matrix _sideBumperRMatrix = Matrix.CreateTranslation(_sideBumperRLocation);
 
             DrawModel(_platte, _platteMatrix, viewMatrix, projectionMatrix);
             DrawModel(_pinball, _pinballMatrix, viewMatrix, projectionMatrix);
             DrawModel(_triggerR, _triggerRMatrix, viewMatrix, projectionMatrix);
             DrawModel(_triggerL, _triggerLMatrix, viewMatrix, projectionMatrix);
             DrawModel(_bumper, _bumperMatrix, viewMatrix, projectionMatrix);
+            DrawModel(_bumper2, _bumper2Matrix, viewMatrix, projectionMatrix);
+            DrawModel(_bumper3, _bumper3Matrix, viewMatrix, projectionMatrix);
+            DrawModel(_bumper4, _bumper4Matrix, viewMatrix, projectionMatrix);
+            DrawModel(_sideBumperL, _sideBumperLMatrix, viewMatrix, projectionMatrix);
+            DrawModel(_sideBumperR, _sideBumperRMatrix, viewMatrix, projectionMatrix);
             /*foreach (ModelMesh mesh in _pinball.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
