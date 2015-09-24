@@ -41,6 +41,10 @@ namespace PinballProjekt
 
         Vector3 _collisionPosition;
         Vector3 _pinballLocationOLD = new Vector3(0f, 0f, 0f);
+        Vector3 _triggerLPressed = new Vector3(10f, -1f, -30f);
+        Vector3 _triggerLNormal = new Vector3(10f, -1f, -40f);
+        Vector3 _triggerRPressed = new Vector3(-10f, -1f, -30f);
+        Vector3 _triggerRNormal = new Vector3(-10f, -1f, -40f);
         //float _streckeX;
         //float _streckeY;
 
@@ -236,12 +240,26 @@ namespace PinballProjekt
             {
                 orbit = !orbit;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.L))
+            if (Keyboard.GetState().IsKeyDown(Keys.K))
             {
-                Vector3 _triggerLLocation = new Vector3(15f, -1f, -30f);
+                _triggerLLocation = _triggerLPressed;
                 System.Diagnostics.Debug.WriteLine("GEDRÜCKT");
-
             }
+            if(Keyboard.GetState().IsKeyUp(Keys.K))
+            {
+                _triggerLLocation = _triggerLNormal;
+            }
+
+            if(Keyboard.GetState().IsKeyDown(Keys.L))
+            {
+                _triggerRLocation = _triggerRPressed;
+            }
+            
+            if(Keyboard.GetState().IsKeyUp(Keys.L))
+            {
+                _triggerRLocation = _triggerRNormal;
+            }
+            
             //Kamera dreht sich automatisch um Target, Orbit
             if (orbit)
             {
