@@ -26,7 +26,7 @@ namespace PinballProjekt
         Vector3 _sideBumperLLocation = new Vector3(15f, -1f, -10f);
         Vector3 _sideBumperRLocation = new Vector3(-15f, -1f, -10f);
 
-        Rectangle BoundingBox;
+        //Rectangle BoundingBox;
 
         Model _pinball;
         Model _platte;
@@ -43,14 +43,18 @@ namespace PinballProjekt
         Vector3 _pinballLocationOLD = new Vector3(0f, 0f, 0f);
         Vector3 _triggerLPressed = new Vector3(10f, -1f, -30f);
         Vector3 _triggerLNormal = new Vector3(10f, -1f, -40f);
-        Vector3 _triggerRPressed = new Vector3(-10f, -1f, -30f);
-        Vector3 _triggerRNormal = new Vector3(-10f, -1f, -40f);
+        //Vector3 _triggerRPressed = new Vector3(-10f, -1f, -30f);
+        //Vector3 _triggerRNormal = new Vector3(-10f, -1f, -40f);
         //float _streckeX;
         //float _streckeY;
 
         float _timer = 0f;
         float _velocityX = -0.3f;
         float _velocityZ = -0.5f;
+
+        float _triggerRvelocityZ = 0.2f;
+
+        bool triggerRMoving = false;
 
         //Orbit oder nicht Orbit?
         bool orbit;
@@ -138,7 +142,7 @@ namespace PinballProjekt
                 //_pinballLocation += einfall(_pinballLocationOLD, _collisionPosition);
                 //_velocityX *= 1f;
                 _velocityZ *= -1f;
-                System.Diagnostics.Debug.WriteLine("Collision");
+                //System.Diagnostics.Debug.WriteLine("Collision");
             }
 
             if(EdgeCollisionRechtsLinks())
@@ -151,14 +155,21 @@ namespace PinballProjekt
             {
                 _velocityX *= 1f;
                 _velocityZ *= -1f;
-                System.Diagnostics.Debug.WriteLine("KEINE COLLISION");
+                //System.Diagnostics.Debug.WriteLine("TriggerR-COLLISION");
             }
 
-            if(Ltrigger())
+            if (Rtrigger() && triggerRMoving)
+            {
+                _velocityX *= 1f;
+                _velocityZ *= -1.2f;
+                System.Diagnostics.Debug.WriteLine("TriggerRMOVING-COLLISION");
+            }
+
+            if (Ltrigger())
             {
                 _velocityX *= 1f;
                 _velocityZ *= -1f;
-                System.Diagnostics.Debug.WriteLine("KEINE COLLISION");
+                //System.Diagnostics.Debug.WriteLine("TriggerL-COLLISION");
             }
 
             if(LsideBumper())
@@ -175,28 +186,28 @@ namespace PinballProjekt
             {
                 _velocityX *= 1;
                 _velocityZ *= -1;
-                System.Diagnostics.Debug.WriteLine(_pinballLocation);
+                //System.Diagnostics.Debug.WriteLine(_pinballLocation);
             }
 
             if (Bumper2())
             {
                 _velocityX *= 1;
                 _velocityZ *= -1;
-                System.Diagnostics.Debug.WriteLine(_pinballLocation);
+                //System.Diagnostics.Debug.WriteLine(_pinballLocation);
             }
 
             if (Bumper3())
             {
                 _velocityX *= 1;
                 _velocityZ *= -1;
-                System.Diagnostics.Debug.WriteLine(_pinballLocation);
+                //System.Diagnostics.Debug.WriteLine(_pinballLocation);
             }
 
             if (Bumper4())
             {
                 _velocityX *= 1;
                 _velocityZ *= -1;
-                System.Diagnostics.Debug.WriteLine(_pinballLocation);
+                //System.Diagnostics.Debug.WriteLine(_pinballLocation);
             }
 
             /*if (IsCollision(_pinball, _pinballMatrix, _platte, _platteMatrix))
@@ -243,7 +254,7 @@ namespace PinballProjekt
             if (Keyboard.GetState().IsKeyDown(Keys.K))
             {
                 _triggerLLocation = _triggerLPressed;
-                System.Diagnostics.Debug.WriteLine("GEDRÜCKT");
+                //System.Diagnostics.Debug.WriteLine("GEDRÜCKT");
             }
             if(Keyboard.GetState().IsKeyUp(Keys.K))
             {
@@ -252,12 +263,21 @@ namespace PinballProjekt
 
             if(Keyboard.GetState().IsKeyDown(Keys.L))
             {
-                _triggerRLocation = _triggerRPressed;
+                //_triggerRLocation = _triggerRPressed;
+                if (_triggerRLocation.Z <= -30f)
+                {
+                    _triggerRLocation.Z += _triggerRvelocityZ;
+                    triggerRMoving = true;
+                }
+                else
+                {
+                    triggerRMoving = false;
+                }
             }
             
             if(Keyboard.GetState().IsKeyUp(Keys.L))
             {
-                _triggerRLocation = _triggerRNormal;
+                _triggerRLocation.Z = -40f;
             }
             
             //Kamera dreht sich automatisch um Target, Orbit
@@ -268,7 +288,7 @@ namespace PinballProjekt
             }
             viewMatrix = Matrix.CreateLookAt(camPosition, camTarget, Vector3.Up);
 
-            System.Diagnostics.Debug.WriteLine(_pinballLocation.Y + " - Aktuell Y");
+            /*System.Diagnostics.Debug.WriteLine(_pinballLocation.Y + " - Aktuell Y");
             System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.Y + " - Alt Y");
             System.Diagnostics.Debug.WriteLine(_pinballLocation.X + " - Aktuell X");
             System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.X + " - Alt X");
@@ -276,7 +296,7 @@ namespace PinballProjekt
             System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.Z + "- Alt Z ");
 
             System.Diagnostics.Debug.WriteLine(_velocityX + "- Vel X");
-            System.Diagnostics.Debug.WriteLine(_velocityZ + "- Vel Y");
+            System.Diagnostics.Debug.WriteLine(_velocityZ + "- Vel Y");*/
 
             _pinballLocation.Z += _velocityZ;
             _pinballLocation.X += _velocityX;
@@ -313,35 +333,33 @@ namespace PinballProjekt
 
         private bool Rtrigger()
         {
-            if(_pinballLocation.Z <= -39f && _pinballLocation.Z >=-41f)
-            {
-                if(_pinballLocation.X <= -5f && _pinballLocation.X >= -15f)
+                if (_pinballLocation.Z <= _triggerRLocation.Z + 1 && _pinballLocation.Z >= _triggerRLocation.Z - 1)
                 {
-                    return true;
+                    if (_pinballLocation.X <= -5f && _pinballLocation.X >= -15f)
+                    {
+                        return true;
+                    }
                 }
-                
-            }
-            return false;
+                return false;                    
         }
 
         private bool Ltrigger()
         {
-            if (_pinballLocation.Z <= -39f && _pinballLocation.Z >= -41f)
-            {
-                if (_pinballLocation.X >= 5f && _pinballLocation.X <= 15f)
+                if (_pinballLocation.Z <= _triggerLLocation.Z + 1 && _pinballLocation.Z >= _triggerLLocation.Z - 1)
                 {
-                    return true;
+                    if (_pinballLocation.X >= 5f && _pinballLocation.X <= 15f)
+                    {
+                        return true;
+                    }
                 }
-
-            }
-            return false;
+                return false;
         }
 
         private bool LsideBumper()
         {
             if(_pinballLocation.Z <=-6 && _pinballLocation.Z >= -14)
             {
-                if(_pinballLocation.X >= 13 && _pinballLocation.X <=17)
+                if(_pinballLocation.X >= 14 && _pinballLocation.X <=16)
                 {
                     return true;
                 }
@@ -353,7 +371,7 @@ namespace PinballProjekt
         {
             if (_pinballLocation.Z <= -6 && _pinballLocation.Z >= -14)
             {
-                if (_pinballLocation.X >= -17 && _pinballLocation.X <= -13)
+                if (_pinballLocation.X >= -16 && _pinballLocation.X <= -14)
                 {
                     return true;
                 }
