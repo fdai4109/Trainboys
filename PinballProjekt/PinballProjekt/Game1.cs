@@ -19,7 +19,9 @@ namespace PinballProjekt
         Vector3 _pinballLocation = new Vector3(0f, 0f, 0f);
         Vector3 _triggerRLocation = new Vector3(-10f, -1f, -40f);
         Vector3 _triggerLLocation = new Vector3(10f, -1f, -40f);
-        Vector3 _bumperLocation = new Vector3(0f, -1f, 0f);
+        Vector3 _bumperLocation = new Vector3(0f, 0f, 0f);
+
+        Rectangle BoundingBox;
 
         Model _pinball;
         Model _platte;
@@ -33,7 +35,7 @@ namespace PinballProjekt
         //float _streckeY;
 
         float _timer = 0f;
-        float _velocityX = -0.8f;
+        float _velocityX = -0.3f;
         float _velocityZ = -0.5f;
 
         //Orbit oder nicht Orbit?
@@ -44,6 +46,9 @@ namespace PinballProjekt
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
+        
+        
+        
 
         protected override void Initialize()
         {
@@ -51,7 +56,9 @@ namespace PinballProjekt
 
             //Kamera-Setup
             camTarget = new Vector3(0f, 0f, 0f);
-            camPosition = new Vector3(0f, 100f, -180f);
+            //camPosition = new Vector3(0f, 100f, -180f); //Anfangsposition: Schräge Sicht
+            //camPosition = new Vector3(0f, 150f, -1f); //Draufsicht
+            camPosition = new Vector3(0f, 0.5f, 10f); //Bumperansicht
 
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), GraphicsDevice.DisplayMode.AspectRatio, 1f, 1000f);
             viewMatrix = Matrix.CreateLookAt(camPosition, camTarget, Vector3.Up);
@@ -115,6 +122,27 @@ namespace PinballProjekt
             {
                 _velocityX *= -1;
                 //_velocityZ *= 1;
+            }
+
+            if(Rtrigger())
+            {
+                _velocityX *= 1;
+                _velocityZ *= -1;
+                System.Diagnostics.Debug.WriteLine("KEINE COLLISION");
+            }
+
+            if(Ltrigger())
+            {
+                _velocityX *= 1;
+                _velocityZ *= -1;
+                System.Diagnostics.Debug.WriteLine("KEINE COLLISION");
+            }
+
+            if (Bumper())
+            {
+                _velocityX *= 1;
+                _velocityZ *= -1;
+                System.Diagnostics.Debug.WriteLine(_pinballLocation);
             }
 
             /*if (IsCollision(_pinball, _pinballMatrix, _platte, _platteMatrix))
@@ -210,8 +238,35 @@ namespace PinballProjekt
             return false;
         }
 
+        private bool Rtrigger()
+        {
+            if(_pinballLocation.Z <= -39f && _pinballLocation.Z >=-41f)
+            {
+                if(_pinballLocation.X <= -5f && _pinballLocation.X >= -15f)
+                {
+                    return true;
+                }
+                
+            }
+            return false;
+        }
+
+        private bool Ltrigger()
+        {
+            if (_pinballLocation.Z <= -39f && _pinballLocation.Z >= -41f)
+            {
+                if (_pinballLocation.X >= 5f && _pinballLocation.X <= 15f)
+                {
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
         private bool EdgeCollisionObenUnten()
         {
+            
              if(_pinballLocation.Z >= 48)
             {
                 _collisionPosition = _pinballLocation;
@@ -225,6 +280,20 @@ namespace PinballProjekt
             
             
                 return false;
+        }
+
+        private bool Bumper()
+        {
+            if (_pinballLocation.Z <= 2f && _pinballLocation.Z >= -2f)
+            {
+                if (_pinballLocation.X <= 2f && _pinballLocation.X >= -2f)
+                {
+                    BumperReaktion();
+                    return true;
+                }
+
+            }
+            return false;
         }
 
         private bool EdgeCollisionRechtsLinks()
@@ -242,10 +311,26 @@ namespace PinballProjekt
             return false;
         }
 
-        private Rectangle drawRectangle(int x, int y, int breite, int tiefe)
+        public Rectangle Box(int x, int y, int breite, int höhe)
         {
-            Rectangle colli = new Rectangle(x, y, breite, tiefe);
-            return colli;
+            Rectangle collision = new Rectangle(x, y, breite, höhe);
+            return collision;
+        }
+
+        public void BumperReaktion()
+        {
+            /*do
+            {
+                if (_bumperLocation.Y >= -1f)
+                {
+                    _bumperLocation.Y -= 0.1f;
+                }
+                else if (_bumperLocation.Y <= 0f)
+                {
+                    _bumperLocation.Y += 0.1f;
+                }
+                
+            } while (_bumperLocation.Y < 0f);*/
         }
 
         protected override void Draw(GameTime gameTime)
@@ -263,7 +348,6 @@ namespace PinballProjekt
             DrawModel(_triggerR, _triggerRMatrix, viewMatrix, projectionMatrix);
             DrawModel(_triggerL, _triggerLMatrix, viewMatrix, projectionMatrix);
             DrawModel(_bumper, _bumperMatrix, viewMatrix, projectionMatrix);
-
             /*foreach (ModelMesh mesh in _pinball.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
