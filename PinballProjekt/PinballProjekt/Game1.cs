@@ -60,9 +60,18 @@ namespace PinballProjekt
 
         float _triggerRvelocityZ = 0.2f;
         float _triggerLvelocityZ = 0.2f;
+<<<<<<< HEAD
         float _triggerRvelocityX = 0.2f;
         float _triggerLvelocityX = 0.2f;
         #endregion
+=======
+
+        float _triggerRvelocityX = 0.2f;
+        float _triggerLvelocityX = 0.2f;
+
+        #endregion
+
+>>>>>>> ee56e94691130948ac13eca88c49ff3603b143f6
 
         #region Bools
         bool triggerRMoving = false;
@@ -355,10 +364,17 @@ namespace PinballProjekt
 
             if (Keyboard.GetState().IsKeyUp(Keys.O))
             {
+<<<<<<< HEAD
                 if (_triggerRLocation.X >= -10f)
                 {
                     _triggerRLocation.X -= _triggerRvelocityX;
                     //triggerRMoving = true;
+=======
+                if (_triggerRLocation.X <= -05f)
+                {
+                    _triggerRLocation.X += _triggerRvelocityX;
+                    triggerRMoving = true;
+>>>>>>> ee56e94691130948ac13eca88c49ff3603b143f6
                 }
                 else
                 {
@@ -368,10 +384,17 @@ namespace PinballProjekt
 
             if (Keyboard.GetState().IsKeyDown(Keys.I))
             {
+<<<<<<< HEAD
                 if (_triggerLLocation.X >= 5f)
                 {
                     _triggerLLocation.X -= _triggerLvelocityX;
                     //triggerLMoving = true;
+=======
+                if (_triggerLLocation.X <= 10f)
+                {
+                    _triggerLLocation.X += _triggerLvelocityX;
+                    triggerLMoving = true;
+>>>>>>> ee56e94691130948ac13eca88c49ff3603b143f6
                 }
                 else
                 {
@@ -449,7 +472,11 @@ namespace PinballProjekt
         {
                 if (_pinballLocation.Z <= _triggerRLocation.Z + 1 && _pinballLocation.Z >= _triggerRLocation.Z - 1)
                 {
+<<<<<<< HEAD
                     if (_pinballLocation.X <= _triggerRLocation.X + 5 && _pinballLocation.X >= _triggerRLocation.X - 5)
+=======
+                    if (_pinballLocation.X <= _triggerRLocation.X +5f && _pinballLocation.X >= _triggerRLocation.X -5f)
+>>>>>>> ee56e94691130948ac13eca88c49ff3603b143f6
                     {
                         return true;
                     }
@@ -461,7 +488,11 @@ namespace PinballProjekt
         {
                 if (_pinballLocation.Z <= _triggerLLocation.Z + 1 && _pinballLocation.Z >= _triggerLLocation.Z - 1)
                 {
+<<<<<<< HEAD
                     if (_pinballLocation.X >= _triggerLLocation.X - 5 && _pinballLocation.X <= _triggerLLocation.X + 5)
+=======
+                    if (_pinballLocation.X >= _triggerLLocation.X -5f && _pinballLocation.X <= _triggerLLocation.X +5f)
+>>>>>>> ee56e94691130948ac13eca88c49ff3603b143f6
                     {
                         return true;
                     }
