@@ -65,18 +65,20 @@ namespace PinballProjekt
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-        }
+        }              
         
-        
-        
-
         protected override void Initialize()
         {
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.IsFullScreen = false;
+            graphics.ApplyChanges();
+
             base.Initialize();
 
             //Kamera-Setup
             camTarget = new Vector3(0f, 0f, 0f);
-            camPosition = new Vector3(0f, 100f, -180f); //Anfangsposition: Schräge Sicht
+            camPosition = new Vector3(0f, 100f, -80f); //Anfangsposition: Schräge Sicht
             //camPosition = new Vector3(0f, 150f, -1f); //Draufsicht
             //camPosition = new Vector3(0f, 0.5f, 10f); //Bumperansicht
 
@@ -134,7 +136,7 @@ namespace PinballProjekt
 
             if (_timer >= 200f)
             {
-                _pinballLocationOLD = _pinballLocation;
+                //_pinballLocationOLD = _pinballLocation;
                 _velocityZ -= 0.07f;
                 _timer = 0f;
             }
@@ -153,28 +155,34 @@ namespace PinballProjekt
                 //_velocityZ *= 1;
             }
 
-            if(Rtrigger())
+            if(Rtrigger() && !triggerRMoving)
             {
-                _velocityX *= 1f;
+                //_velocityX *= 1f;
                 _velocityZ *= -1f;
                 //System.Diagnostics.Debug.WriteLine("TriggerR-COLLISION");
             }
 
-            if (Rtrigger() && triggerRMoving)
+            if (triggerRMoving && Rtrigger())
             {
-                _velocityX *= 1f;
-                _velocityZ *= -1.2f;
-                System.Diagnostics.Debug.WriteLine("TriggerRMOVING-COLLISION");
+                //_velocityX *= 1f;
+                _velocityZ *= -1.1f;
+                //System.Diagnostics.Debug.WriteLine("TriggerRMOVING-COLLISION");
             }
 
-            if (Ltrigger())
+            if (Ltrigger() && !triggerLMoving)
             {
-                _velocityX *= 1f;
+                //_velocityX *= 1f;
                 _velocityZ *= -1f;
                 //System.Diagnostics.Debug.WriteLine("TriggerL-COLLISION");
             }
 
-            if(LsideBumper())
+            if (Ltrigger() && triggerLMoving)
+            {
+                //_velocityX *= 1f;
+                _velocityZ *= -1.1f;
+            }
+
+            if (LsideBumper())
             {
                 _velocityX *= -1;
             }
@@ -302,7 +310,6 @@ namespace PinballProjekt
                 else
                 {
                     triggerRMoving = false;
-
                 }
                
             }
@@ -324,6 +331,8 @@ namespace PinballProjekt
 
             System.Diagnostics.Debug.WriteLine(_velocityX + "- Vel X");
             System.Diagnostics.Debug.WriteLine(_velocityZ + "- Vel Y");*/
+
+            System.Diagnostics.Debug.WriteLine(_velocityZ);
 
             _pinballLocation.Z += _velocityZ;
             _pinballLocation.X += _velocityX;
