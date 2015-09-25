@@ -8,13 +8,14 @@ namespace PinballProjekt
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
-        Vector3 camTarget;
-        Vector3 camPosition;
+        
         Matrix projectionMatrix;
         Matrix viewMatrix;
         //Matrix worldMatrix;
 
+        #region Start Locations
+        Vector3 camTarget;
+        Vector3 camPosition;
         Vector3 _platteLocation = new Vector3(0f, 0f, 0f);
         Vector3 _pinballLocation = new Vector3(0f, 0f, 0f);
         Vector3 _triggerRLocation = new Vector3(-10f, -1f, -40f);
@@ -25,9 +26,9 @@ namespace PinballProjekt
         Vector3 _bumper4Location = new Vector3(0f, 0f, 30f);
         Vector3 _sideBumperLLocation = new Vector3(15f, -1f, -10f);
         Vector3 _sideBumperRLocation = new Vector3(-15f, -1f, -10f);
+        #endregion
 
-        //Rectangle BoundingBox;
-
+        #region Models
         Model _pinball;
         Model _platte;
         Model _triggerR;
@@ -38,13 +39,18 @@ namespace PinballProjekt
         Model _bumper4;
         Model _sideBumperR;
         Model _sideBumperL;
+        #endregion
 
+        #region Gespeicherte Locations
         Vector3 _collisionPosition;
         Vector3 _pinballLocationOLD = new Vector3(0f, 0f, 0f);
         Vector3 _triggerLPressed = new Vector3(10f, -1f, -30f);
         Vector3 _triggerLNormal = new Vector3(10f, -1f, -40f);
         //Vector3 _triggerRPressed = new Vector3(-10f, -1f, -30f);
         //Vector3 _triggerRNormal = new Vector3(-10f, -1f, -40f);
+        #endregion
+
+        #region Floats
         //float _streckeX;
         //float _streckeY;
 
@@ -54,14 +60,19 @@ namespace PinballProjekt
 
         float _triggerRvelocityZ = 0.2f;
         float _triggerLvelocityZ = 0.2f;
+<<<<<<< HEAD
         float _triggerRvelocityX = 0.2f;
         float _triggerLvelocityX = 0.2f;
+=======
+        #endregion
+>>>>>>> origin/master
 
+        #region Bools
         bool triggerRMoving = false;
         bool triggerLMoving = false;
-
-        //Orbit oder nicht Orbit?
-        bool orbit;
+        
+        bool orbit; //Orbit oder nicht Orbit?
+        #endregion
 
         public Game1()
         {
@@ -78,7 +89,7 @@ namespace PinballProjekt
 
             base.Initialize();
 
-            //Kamera-Setup
+            #region Kamera-Setup
             camTarget = new Vector3(0f, 0f, 0f);
             camPosition = new Vector3(0f, 100f, -80f); //Anfangsposition: Schräge Sicht
             //camPosition = new Vector3(0f, 150f, -1f); //Draufsicht
@@ -86,8 +97,10 @@ namespace PinballProjekt
 
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), GraphicsDevice.DisplayMode.AspectRatio, 1f, 1000f);
             viewMatrix = Matrix.CreateLookAt(camPosition, camTarget, Vector3.Up);
-            //worldMatrix = Matrix.CreateWorld(camTarget, Vector3.Forward, Vector3.Up);            
+            //worldMatrix = Matrix.CreateWorld(camTarget, Vector3.Forward, Vector3.Up);
+            #endregion
 
+            #region Content laden
             _pinball = Content.Load<Model>("Pinball");
             _platte = Content.Load<Model>("Platte");
             _triggerR = Content.Load<Model>("Trigger");
@@ -98,6 +111,7 @@ namespace PinballProjekt
             _bumper4 = Content.Load<Model>("Bumper");
             _sideBumperR = Content.Load<Model>("SideBumper");
             _sideBumperL = Content.Load<Model>("SideBumper");
+            #endregion
         }
 
 
@@ -112,11 +126,13 @@ namespace PinballProjekt
         }
 
         protected override void Update(GameTime gameTime)
-        {
-            //Game mit ESC schließen
+        {            
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            {
+                Exit(); //Game mit ESC schließen
+            }
 
+            #region Matrizen werden platziert
             Matrix _pinballMatrix = Matrix.CreateTranslation(_pinballLocation);
             Matrix _platteMatrix = Matrix.CreateTranslation(_platteLocation);
             Matrix _triggerRMatrix = Matrix.CreateTranslation(_triggerRLocation);
@@ -127,6 +143,7 @@ namespace PinballProjekt
             Matrix _bumper4Matrix = Matrix.CreateTranslation(_bumper4Location);
             Matrix _sideBumperLMatrix = Matrix.CreateTranslation(_sideBumperLLocation);
             Matrix _sideBumperRMatrix = Matrix.CreateTranslation(_sideBumperRLocation);
+            #endregion
 
             /* _streckeX = _pinballLocationOLD.X - _pinballLocation.X;
              _streckeY = _pinballLocationOLD.Y - _pinballLocation.Y;
@@ -139,7 +156,10 @@ namespace PinballProjekt
             if (_timer >= 200f)
             {
                 //_pinballLocationOLD = _pinballLocation;
-                _velocityZ -= 0.07f;
+                if (_velocityZ >= -1.5f)
+                {
+                    _velocityZ -= 0.07f;
+                }
                 _timer = 0f;
             }
 
@@ -236,33 +256,40 @@ namespace PinballProjekt
                 _pinballLocation.X += 1f;
                 //camTarget.X -= 1f;
             }
+
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 _pinballLocation.X -= 1f;
                 //camTarget.X += 1f;
             }
+
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 _pinballLocation.Y += 1f;
                 //camTarget.Y -= 1f;
             }
+
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 _pinballLocation.Y -= 1f;
                 //camTarget.Y += 1f;
             }
+
             if (Keyboard.GetState().IsKeyDown(Keys.OemPlus))
             {
                 camPosition.Z += 1f;
             }
+
             if (Keyboard.GetState().IsKeyDown(Keys.OemMinus))
             {
                 camPosition.Z -= 1f;
             }
+
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 orbit = !orbit;
             }
+
             if (Keyboard.GetState().IsKeyDown(Keys.K))
             {
                 if (_triggerLLocation.Z <= -30f)
@@ -288,7 +315,7 @@ namespace PinballProjekt
                 }
             }
 
-            if(Keyboard.GetState().IsKeyDown(Keys.L))
+            if(Keyboard.GetState().IsKeyDown(Keys.Right))
             {
                 //_triggerRLocation = _triggerRPressed;
                 if (_triggerRLocation.Z <= -30f)
@@ -472,7 +499,7 @@ namespace PinballProjekt
         private bool EdgeCollisionObenUnten()
         {
             
-             if(_pinballLocation.Z >= 48)
+            if(_pinballLocation.Z >= 48)
             {
                 _collisionPosition = _pinballLocation;
                 return true;
@@ -482,9 +509,7 @@ namespace PinballProjekt
                 _collisionPosition = _pinballLocation;
                 return true;
             }
-            
-            
-                return false;
+            return false;
         }
 
         private bool Bumper()
@@ -496,7 +521,6 @@ namespace PinballProjekt
                     //BumperReaktion();
                     return true;
                 }
-
             }
             return false;
         }
@@ -602,6 +626,7 @@ namespace PinballProjekt
             DrawModel(_bumper4, _bumper4Matrix, viewMatrix, projectionMatrix);
             DrawModel(_sideBumperL, _sideBumperLMatrix, viewMatrix, projectionMatrix);
             DrawModel(_sideBumperR, _sideBumperRMatrix, viewMatrix, projectionMatrix);
+
             /*foreach (ModelMesh mesh in _pinball.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
