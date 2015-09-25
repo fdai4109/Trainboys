@@ -55,14 +55,8 @@ namespace PinballProjekt
         //float _streckeY;
 
         float _timer = 0f;
-<<<<<<< HEAD
         float _velocityX = -0.3f;
         float _velocityZ = -0.5f;
-=======
-        float _velocityX = 0f;
-        float _velocityZ = 0f;
-
->>>>>>> 75b72c3bce848468cd786b5013bc0c4e2ee6d93e
         float _triggerRvelocityZ = 0.2f;
         float _triggerLvelocityZ = 0.2f;
         float _triggerRvelocityX = 0.2f;
@@ -392,9 +386,9 @@ namespace PinballProjekt
 
             if (Keyboard.GetState().IsKeyDown(Keys.I))
             {
-                if (_triggerLLocation.X <= -10f)
+                if (_triggerLLocation.X >= 5f)
                 {
-                    _triggerLLocation.X += _triggerLvelocityX;
+                    _triggerLLocation.X -= _triggerLvelocityX;
                     //triggerLMoving = true;
                 }
                 else
