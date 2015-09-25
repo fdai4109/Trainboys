@@ -56,8 +56,8 @@ namespace PinballProjekt
         //float _streckeY;
 
         float _timer = 0f;
-        float _velocityX = 0f;
-        float _velocityZ = 0f;
+        float _velocityX = -0.3f;
+        float _velocityZ = 1f;
         float _triggerRvelocityZ = 0.2f;
         float _triggerLvelocityZ = 0.2f;
         float _triggerRvelocityX = 0.2f;
@@ -239,7 +239,7 @@ namespace PinballProjekt
                 //System.Diagnostics.Debug.WriteLine(_pinballLocation);
             }
 
-            if (StartRampeUnten())
+            /*if (StartRampeUnten())
             {
                 _velocityZ = 0.3f;
             }
@@ -255,6 +255,7 @@ namespace PinballProjekt
                 _velocityX = -0.01f;
                 _velocityZ = -0.1f;
             }
+            */
 
             /*if (IsCollision(_pinball, _pinballMatrix, _platte, _platteMatrix))
             {
@@ -492,7 +493,7 @@ namespace PinballProjekt
         {
             if(_pinballLocation.Z <=-6 && _pinballLocation.Z >= -14)
             {
-                if(_pinballLocation.X >= 14 && _pinballLocation.X <=16)
+                if(_pinballLocation.X >= 13 && _pinballLocation.X <=17)
                 {
                     return true;
                 }
@@ -504,7 +505,7 @@ namespace PinballProjekt
         {
             if (_pinballLocation.Z <= -6 && _pinballLocation.Z >= -14)
             {
-                if (_pinballLocation.X >= -16 && _pinballLocation.X <= -14)
+                if (_pinballLocation.X >= -17 && _pinballLocation.X <= -13)
                 {
                     return true;
                 }
