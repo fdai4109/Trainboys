@@ -56,8 +56,8 @@ namespace PinballProjekt
         //float _streckeY;
 
         float _timer = 0f;
-        float _velocityX = -0.3f;
-        float _velocityZ = -0.5f;
+        float _velocityX = 0f;
+        float _velocityZ = 0f;
         float _triggerRvelocityZ = 0.2f;
         float _triggerLvelocityZ = 0.2f;
         float _triggerRvelocityX = 0.2f;
