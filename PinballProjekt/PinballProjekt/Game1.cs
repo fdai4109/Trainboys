@@ -54,6 +54,8 @@ namespace PinballProjekt
 
         float _triggerRvelocityZ = 0.2f;
         float _triggerLvelocityZ = 0.2f;
+        float _triggerRvelocityX = 0.2f;
+        float _triggerLvelocityX = 0.2f;
 
         bool triggerRMoving = false;
         bool triggerLMoving = false;
@@ -313,7 +315,59 @@ namespace PinballProjekt
                 }
                
             }
-            
+            if (Keyboard.GetState().IsKeyUp(Keys.O))
+            {
+                if (_triggerRLocation.X >= -10f)
+                {
+                    _triggerRLocation.X -= _triggerRvelocityX;
+                    triggerRMoving = true;
+                }
+                else
+                {
+                    triggerRMoving = false;
+                }
+
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.O))
+            {
+                if (_triggerRLocation.X >= -05f)
+                {
+                    _triggerRLocation.X -= _triggerRvelocityX;
+                    triggerRMoving = true;
+                }
+                else
+                {
+                    triggerRMoving = false;
+                }
+
+            }
+            if (Keyboard.GetState().IsKeyUp(Keys.I))
+            {
+                if (_triggerLLocation.X >= 10f)
+                {
+                    _triggerLLocation.X -= _triggerLvelocityX;
+                    triggerLMoving = true;
+                }
+                else
+                {
+                    triggerLMoving = false;
+                }
+
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.I))
+            {
+                if (_triggerLLocation.X >=  05f)
+                {
+                    _triggerLLocation.X -= _triggerLvelocityX;
+                    triggerLMoving = true;
+                }
+                else
+                {
+                    triggerLMoving = false;
+                }
+
+            }
+
             //Kamera dreht sich automatisch um Target, Orbit
             if (orbit)
             {
