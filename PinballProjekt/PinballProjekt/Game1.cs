@@ -6,6 +6,7 @@ namespace PinballProjekt
 {
     public class Game1 : Game
     {
+        //GIT IST MIST!
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
