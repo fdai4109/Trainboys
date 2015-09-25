@@ -60,12 +60,9 @@ namespace PinballProjekt
 
         float _triggerRvelocityZ = 0.2f;
         float _triggerLvelocityZ = 0.2f;
-<<<<<<< HEAD
         float _triggerRvelocityX = 0.2f;
         float _triggerLvelocityX = 0.2f;
-=======
         #endregion
->>>>>>> origin/master
 
         #region Bools
         bool triggerRMoving = false;
@@ -250,7 +247,7 @@ namespace PinballProjekt
                 System.Diagnostics.Debug.WriteLine("ISCOLLI");
             }*/
 
-            //Kugel-Bewegung
+            #region Kugelbewegung mit WASD
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 _pinballLocation.X += 1f;
@@ -274,6 +271,7 @@ namespace PinballProjekt
                 _pinballLocation.Y -= 1f;
                 //camTarget.Y += 1f;
             }
+            #endregion
 
             if (Keyboard.GetState().IsKeyDown(Keys.OemPlus))
             {
@@ -315,7 +313,7 @@ namespace PinballProjekt
                 }
             }
 
-            if(Keyboard.GetState().IsKeyDown(Keys.Right))
+            if(Keyboard.GetState().IsKeyDown(Keys.L))
             {
                 //_triggerRLocation = _triggerRPressed;
                 if (_triggerRLocation.Z <= -30f)
@@ -339,61 +337,60 @@ namespace PinballProjekt
                 else
                 {
                     triggerRMoving = false;
-                }
-               
+                }               
             }
+            
+            if (Keyboard.GetState().IsKeyDown(Keys.O))
+            {
+                if (_triggerRLocation.X <= -5f)
+                {
+                    _triggerRLocation.X += _triggerRvelocityX;
+                    //triggerRMoving = true;
+                }
+                else
+                {
+                    //triggerRMoving = false;
+                }
+            }
+
             if (Keyboard.GetState().IsKeyUp(Keys.O))
             {
                 if (_triggerRLocation.X >= -10f)
                 {
                     _triggerRLocation.X -= _triggerRvelocityX;
-                    triggerRMoving = true;
+                    //triggerRMoving = true;
                 }
                 else
                 {
-                    triggerRMoving = false;
+                    //triggerRMoving = false;
                 }
-
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.O))
-            {
-                if (_triggerRLocation.X >= -05f)
-                {
-                    _triggerRLocation.X -= _triggerRvelocityX;
-                    triggerRMoving = true;
-                }
-                else
-                {
-                    triggerRMoving = false;
-                }
 
-            }
-            if (Keyboard.GetState().IsKeyUp(Keys.I))
-            {
-                if (_triggerLLocation.X >= 10f)
-                {
-                    _triggerLLocation.X -= _triggerLvelocityX;
-                    triggerLMoving = true;
-                }
-                else
-                {
-                    triggerLMoving = false;
-                }
-
-            }
             if (Keyboard.GetState().IsKeyDown(Keys.I))
             {
-                if (_triggerLLocation.X >=  05f)
+                if (_triggerLLocation.X >= 5f)
                 {
                     _triggerLLocation.X -= _triggerLvelocityX;
-                    triggerLMoving = true;
+                    //triggerLMoving = true;
                 }
                 else
                 {
-                    triggerLMoving = false;
+                    //triggerLMoving = false;
                 }
-
             }
+
+            if (Keyboard.GetState().IsKeyUp(Keys.I))
+            {
+                if (_triggerLLocation.X <= 10f)
+                {
+                    _triggerLLocation.X += _triggerLvelocityX;
+                    //triggerLMoving = true;
+                }
+                else
+                {
+                    //triggerLMoving = false;
+                }
+            }            
 
             //Kamera dreht sich automatisch um Target, Orbit
             if (orbit)
@@ -452,7 +449,7 @@ namespace PinballProjekt
         {
                 if (_pinballLocation.Z <= _triggerRLocation.Z + 1 && _pinballLocation.Z >= _triggerRLocation.Z - 1)
                 {
-                    if (_pinballLocation.X <= -5f && _pinballLocation.X >= -15f)
+                    if (_pinballLocation.X <= _triggerRLocation.X + 5 && _pinballLocation.X >= _triggerRLocation.X - 5)
                     {
                         return true;
                     }
@@ -464,7 +461,7 @@ namespace PinballProjekt
         {
                 if (_pinballLocation.Z <= _triggerLLocation.Z + 1 && _pinballLocation.Z >= _triggerLLocation.Z - 1)
                 {
-                    if (_pinballLocation.X >= 5f && _pinballLocation.X <= 15f)
+                    if (_pinballLocation.X >= _triggerLLocation.X - 5 && _pinballLocation.X <= _triggerLLocation.X + 5)
                     {
                         return true;
                     }
@@ -497,8 +494,7 @@ namespace PinballProjekt
         }
 
         private bool EdgeCollisionObenUnten()
-        {
-            
+        {            
             if(_pinballLocation.Z >= 48)
             {
                 _collisionPosition = _pinballLocation;
@@ -585,9 +581,9 @@ namespace PinballProjekt
             return collision;
         }
 
-        public void BumperReaktion()
+        /*public void BumperReaktion()
         {
-            /*do
+            do
             {
                 if (_bumperLocation.Y >= -1f)
                 {
@@ -598,8 +594,8 @@ namespace PinballProjekt
                     _bumperLocation.Y += 0.1f;
                 }
                 
-            } while (_bumperLocation.Y < 0f);*/
-        }
+            } while (_bumperLocation.Y < 0f);
+        }*/
 
         protected override void Draw(GameTime gameTime)
         {
