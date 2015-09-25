@@ -53,8 +53,10 @@ namespace PinballProjekt
         float _velocityZ = -0.5f;
 
         float _triggerRvelocityZ = 0.2f;
+        float _triggerLvelocityZ = 0.2f;
 
         bool triggerRMoving = false;
+        bool triggerLMoving = false;
 
         //Orbit oder nicht Orbit?
         bool orbit;
@@ -253,12 +255,27 @@ namespace PinballProjekt
             }
             if (Keyboard.GetState().IsKeyDown(Keys.K))
             {
-                _triggerLLocation = _triggerLPressed;
-                //System.Diagnostics.Debug.WriteLine("GEDRÜCKT");
+                if (_triggerLLocation.Z <= -30f)
+                {
+                    _triggerLLocation.Z += _triggerLvelocityZ;
+                    triggerLMoving = true;
+                }
+                else
+                {
+                    triggerLMoving = false;
+                }
             }
             if(Keyboard.GetState().IsKeyUp(Keys.K))
             {
-                _triggerLLocation = _triggerLNormal;
+                if (_triggerLLocation.Z >= -40f)
+                {
+                    _triggerLLocation.Z -= _triggerLvelocityZ;
+                    triggerLMoving = true;
+                }
+                else
+                {
+                    triggerLMoving = false;
+                }
             }
 
             if(Keyboard.GetState().IsKeyDown(Keys.L))
@@ -277,7 +294,17 @@ namespace PinballProjekt
             
             if(Keyboard.GetState().IsKeyUp(Keys.L))
             {
-                _triggerRLocation.Z = -40f;
+                if(_triggerRLocation.Z >= -40f)
+                {
+                    _triggerRLocation.Z -= _triggerRvelocityZ;
+                    triggerRMoving = true;
+                }
+                else
+                {
+                    triggerRMoving = false;
+
+                }
+               
             }
             
             //Kamera dreht sich automatisch um Target, Orbit
