@@ -17,7 +17,7 @@ namespace PinballProjekt
         Vector3 camTarget;
         Vector3 camPosition;
         Vector3 _platteLocation = new Vector3(0f, 0f, 0f);
-        Vector3 _pinballLocation = new Vector3(0f, 0f, 0f);
+        Vector3 _pinballLocation = new Vector3(-23f, 0f, -48f);
         Vector3 _triggerRLocation = new Vector3(-10f, -1f, -40f);
         Vector3 _triggerLLocation = new Vector3(10f, -1f, -40f);
         Vector3 _bumperLocation = new Vector3(0f, 0f, 20f);
@@ -55,8 +55,14 @@ namespace PinballProjekt
         //float _streckeY;
 
         float _timer = 0f;
+<<<<<<< HEAD
         float _velocityX = -0.3f;
         float _velocityZ = -0.5f;
+=======
+        float _velocityX = 0f;
+        float _velocityZ = 0f;
+
+>>>>>>> 75b72c3bce848468cd786b5013bc0c4e2ee6d93e
         float _triggerRvelocityZ = 0.2f;
         float _triggerLvelocityZ = 0.2f;
         float _triggerRvelocityX = 0.2f;
@@ -236,6 +242,23 @@ namespace PinballProjekt
                 _velocityX *= 1;
                 _velocityZ *= -1;
                 //System.Diagnostics.Debug.WriteLine(_pinballLocation);
+            }
+
+            if (StartRampeUnten())
+            {
+                _velocityZ = 0.3f;
+            }
+
+            if(StartRampeOben())
+            {
+                _velocityZ = 0f;
+                _velocityX = 0.3f;
+            }
+
+            if(StartRampeLinks())
+            {
+                _velocityX = -0.01f;
+                _velocityZ = -0.1f;
             }
 
             /*if (IsCollision(_pinball, _pinballMatrix, _platte, _platteMatrix))
@@ -576,11 +599,49 @@ namespace PinballProjekt
             return false;
         }
 
-        public Rectangle Box(int x, int y, int breite, int höhe)
+        private bool StartRampeUnten()
+        {
+            if(_pinballLocation.X >= -23 && _pinballLocation.X <= -20)
+            {
+                if(_pinballLocation.Z <= 44 && _pinballLocation.Z >= -48)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool StartRampeOben()
+        {
+            if(_pinballLocation.X >= -23 && _pinballLocation.X <= 20)
+            {
+                if(_pinballLocation.Z <= 48 && _pinballLocation.Z >= 47)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool StartRampeLinks()
+        {
+            if (_pinballLocation.X >= 22 && _pinballLocation.X <= 23)
+            {
+                if(_pinballLocation.Z <= 48 && _pinballLocation.Z >= 45)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /*public Rectangle Box(int x, int y, int breite, int höhe)
         {
             Rectangle collision = new Rectangle(x, y, breite, höhe);
             return collision;
-        }
+        }*/
+
+        
 
         /*public void BumperReaktion()
         {
