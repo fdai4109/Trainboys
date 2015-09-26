@@ -12,11 +12,7 @@ namespace PinballProjekt
 
         private SpriteFont font;
         private int score = 0;
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> 393b7b6e66f3a6458e327650d36c74b93c0af52b
         Matrix projectionMatrix;
         Matrix viewMatrix;
         //Matrix worldMatrix;
@@ -173,11 +169,7 @@ namespace PinballProjekt
             }
 
             #region Wandkollision
-<<<<<<< HEAD
-            if(EdgeCollisionObenUnten())
-=======
             if (EdgeCollisionObenUnten())
->>>>>>> 393b7b6e66f3a6458e327650d36c74b93c0af52b
             {
                 //_pinballLocation += einfall(_pinballLocationOLD, _collisionPosition);
                 //_velocityX *= 1f;
@@ -361,11 +353,7 @@ namespace PinballProjekt
                 }
             }
 
-<<<<<<< HEAD
-            if(Keyboard.GetState().IsKeyUp(Keys.K))
-=======
             if (Keyboard.GetState().IsKeyUp(Keys.K))
->>>>>>> 393b7b6e66f3a6458e327650d36c74b93c0af52b
             {
                 if (_triggerLLocation.Z >= -40f)
                 {
@@ -506,47 +494,27 @@ namespace PinballProjekt
         #region Trigger-Bool-Funktionen
         private bool Rtrigger()
         {
-<<<<<<< HEAD
-                if (_pinballLocation.Z <= _triggerRLocation.Z + 1 && _pinballLocation.Z >= _triggerRLocation.Z - 1 && _pinballLocation.X <= _triggerRLocation.X + 5f && _pinballLocation.X >= _triggerRLocation.X - 5)
-                {
-                    return true;
-                }
-                return false;                    
-=======
             if (_pinballLocation.Z <= _triggerRLocation.Z + 1 && _pinballLocation.Z >= _triggerRLocation.Z - 1 && _pinballLocation.X <= _triggerRLocation.X + 5f && _pinballLocation.X >= _triggerRLocation.X - 5)
             {
                 return true;
             }
             return false;
->>>>>>> 393b7b6e66f3a6458e327650d36c74b93c0af52b
         }
 
         private bool Ltrigger()
         {
-<<<<<<< HEAD
-                if (_pinballLocation.Z <= _triggerLLocation.Z + 1 && _pinballLocation.Z >= _triggerLLocation.Z - 1 && _pinballLocation.X >= _triggerLLocation.X - 5f && _pinballLocation.X <= _triggerLLocation.X + 5)
-                {
-                    return true;
-                }
-                return false;
-=======
             if (_pinballLocation.Z <= _triggerLLocation.Z + 1 && _pinballLocation.Z >= _triggerLLocation.Z - 1 && _pinballLocation.X >= _triggerLLocation.X - 5f && _pinballLocation.X <= _triggerLLocation.X + 5)
             {
                 return true;
             }
             return false;
->>>>>>> 393b7b6e66f3a6458e327650d36c74b93c0af52b
         }
         #endregion
 
         #region Sidebumper-Bool-Funktionen
         private bool LsideBumper()
         {
-<<<<<<< HEAD
-            if(_pinballLocation.Z <=-6 && _pinballLocation.Z >= -14 && _pinballLocation.X >= 13 && _pinballLocation.X <= 17)
-=======
             if (_pinballLocation.Z <= -6 && _pinballLocation.Z >= -14 && _pinballLocation.X >= 13 && _pinballLocation.X <= 17)
->>>>>>> 393b7b6e66f3a6458e327650d36c74b93c0af52b
             {
                 return true;
             }
