@@ -127,3 +127,6 @@
 /processorParam:TextureFormat=DxtCompressed
 /build:Rampe.fbx
 
+#begin Font.xnb
+/copy:Font.xnb
+
