@@ -287,6 +287,23 @@ namespace PinballProjekt
             }*/
             #endregion
 
+            #region Mauern Startrampe
+            if(rechteWand())
+            {
+                _velocityX *= -1;
+            }
+
+            if(obereWand())
+            {
+                _velocityZ *= -1;
+            }
+
+            if(linkeWand())
+            {
+                _velocityX *= -1;
+            }
+            #endregion
+
             /*if (IsCollision(_pinball, _pinballMatrix, _platte, _platteMatrix))
             {
                 _pinballLocation += einfall(_pinballLocationOLD, _collisionPosition);
@@ -615,7 +632,7 @@ namespace PinballProjekt
         #region Startrampe-Bool-Funktionen
         private bool StartRampeUnten()
         {
-            if (_pinballLocation.X >= -23 && _pinballLocation.X <= -20)
+            if (_pinballLocation.X >= -23 && _pinballLocation.X <= -22)
             {
                 if (_pinballLocation.Z <= 44 && _pinballLocation.Z >= -48)
                 {
@@ -650,12 +667,51 @@ namespace PinballProjekt
         }
         #endregion
 
+        #region Startrampenbegrenzung Bool-Funktionen
+        private bool rechteWand()
+        {
+            if(_pinballLocation.X >= -21 && _pinballLocation.X <= -22)
+            {
+                if(_pinballLocation.Y >= - 23 && _pinballLocation.Y <= 46)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool obereWand()
+        {
+            if(_pinballLocation.X <= 20 && _pinballLocation.X >= -21)
+            {
+                if(_pinballLocation.Y >= 46 && _pinballLocation.Y <= 47)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool linkeWand()
+        {
+            if(_pinballLocation.X >= 21 && _pinballLocation.X <= 22)
+            {
+                if(_pinballLocation.Y <= 46 && _pinballLocation.Y >= 36)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        #endregion
+
+
         /*public Rectangle Box(int x, int y, int breite, int höhe)
         {
             Rectangle collision = new Rectangle(x, y, breite, höhe);
             return collision;
         }*/
-        
+
         /*public void BumperReaktion()
         {
             do
