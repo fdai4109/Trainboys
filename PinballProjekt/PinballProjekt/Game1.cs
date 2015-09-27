@@ -32,6 +32,7 @@ namespace PinballProjekt
         Vector3 _sideBumperRLocation = new Vector3(-15f, -1f, -10f);
         Vector3 _startRampeLocation = new Vector3(0f, -1f, -1f);
         Vector3 _grenzeRechtsLocation = new Vector3(-18f, -1f, -44f);
+        Vector3 _grenzeLinksLocation = new Vector3(+18f, -1f, -44f);
         Vector3 _bumperWand1Location = new Vector3(0f, -1f, 0);
         #endregion
 
@@ -48,6 +49,7 @@ namespace PinballProjekt
         Model _sideBumperL;
         Model _startRampe;
         Model _grenzeRechts;
+        Model _grenzeLinks;
         Model _bumperWand1;
         #endregion
 
@@ -117,6 +119,7 @@ namespace PinballProjekt
             _sideBumperL = Content.Load<Model>("SideBumper");
             _startRampe = Content.Load<Model>("Rampe");
             _grenzeRechts = Content.Load<Model>("GrenzeRechts");
+            _grenzeLinks = Content.Load<Model>("GrenzeLinks");
             _bumperWand1 = Content.Load<Model>("BumperWand");
             #endregion
         }
@@ -135,25 +138,28 @@ namespace PinballProjekt
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
+
+            if (gamePadState.Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit(); //Game mit ESC schließen
             }
 
             #region Matrizen werden platziert
             Matrix _pinballMatrix = Matrix.CreateTranslation(_pinballLocation);
-            Matrix _platteMatrix = Matrix.CreateTranslation(_platteLocation);
+            //Matrix _platteMatrix = Matrix.CreateTranslation(_platteLocation);
             Matrix _triggerRMatrix = Matrix.CreateTranslation(_triggerRLocation);
             Matrix _triggerLMatrix = Matrix.CreateTranslation(_triggerLLocation);
-            Matrix _bumperMatrix = Matrix.CreateTranslation(_bumperLocation);
-            Matrix _bumper2Matrix = Matrix.CreateTranslation(_bumper2Location);
-            Matrix _bumper3Matrix = Matrix.CreateTranslation(_bumper3Location);
-            Matrix _bumper4Matrix = Matrix.CreateTranslation(_bumper4Location);
-            Matrix _sideBumperLMatrix = Matrix.CreateTranslation(_sideBumperLLocation);
-            Matrix _sideBumperRMatrix = Matrix.CreateTranslation(_sideBumperRLocation);
-            Matrix _startRampeMatrix = Matrix.CreateTranslation(_startRampeLocation);
-            Matrix _grenzeRechtsMatrix = Matrix.CreateTranslation(_grenzeRechtsLocation);
-            Matrix _bumperWand1Matrix = Matrix.CreateTranslation(_bumperWand1Location);
+            //Matrix _bumperMatrix = Matrix.CreateTranslation(_bumperLocation);
+            //Matrix _bumper2Matrix = Matrix.CreateTranslation(_bumper2Location);
+            //Matrix _bumper3Matrix = Matrix.CreateTranslation(_bumper3Location);
+            //Matrix _bumper4Matrix = Matrix.CreateTranslation(_bumper4Location);
+            //Matrix _sideBumperLMatrix = Matrix.CreateTranslation(_sideBumperLLocation);
+            //Matrix _sideBumperRMatrix = Matrix.CreateTranslation(_sideBumperRLocation);
+            //Matrix _startRampeMatrix = Matrix.CreateTranslation(_startRampeLocation);
+            //Matrix _grenzeRechtsMatrix = Matrix.CreateTranslation(_grenzeRechtsLocation);
+            //Matrix _grenzeLinksMatrix = Matrix.CreateTranslation(_grenzeLinksLocation);
+            //Matrix _bumperWand1Matrix = Matrix.CreateTranslation(_bumperWand1Location);
             #endregion
 
             /* _streckeX = _pinballLocationOLD.X - _pinballLocation.X;
@@ -321,7 +327,7 @@ namespace PinballProjekt
             }*/
 
             #region Kugelbewegung mit WASD
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            /*if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 _pinballLocation.X += 1f;
                 //camTarget.X -= 1f;
@@ -343,7 +349,7 @@ namespace PinballProjekt
             {
                 _pinballLocation.Y -= 1f;
                 //camTarget.Y += 1f;
-            }
+            }*/
             #endregion
 
             #region Kamerabewegung
@@ -371,7 +377,11 @@ namespace PinballProjekt
             viewMatrix = Matrix.CreateLookAt(camPosition, camTarget, Vector3.Up);
             #endregion
 
-            #region Triggerbewegung
+            System.Diagnostics.Debug.WriteLine(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y);
+
+            //Eine Steuerung für sich auswählen und andere komplett auskommentieren.
+            #region Triggerbewegung - Tastatur
+            /*            
             if (Keyboard.GetState().IsKeyDown(Keys.K))
             {
                 if (_triggerLLocation.Z <= -30f)
@@ -435,7 +445,83 @@ namespace PinballProjekt
                     _triggerLLocation.X += _triggerLvelocityX;
                 }
             }
+            */
             #endregion
+
+            #region Triggerbewegung - Controller
+            //Beide Trigger lassen sich mit dem jeweiligen Thumbstick des Xbox-Controllers steuern.
+            //Funktioniert nur, wenn Tastatursteuerung auskommentiert ist.
+
+            if (gamePadState.ThumbSticks.Left.Y >= 0.1f)
+            {
+                if (_triggerLLocation.Z <= -30f)
+                {
+                    _triggerLLocation.Z += _triggerLvelocityZ;
+                }
+            }
+
+            if (gamePadState.ThumbSticks.Left.Y <= 0f)
+            {
+                if (_triggerLLocation.Z >= -40f)
+                {
+                    _triggerLLocation.Z -= _triggerLvelocityZ;
+                }
+            }
+
+            if (gamePadState.ThumbSticks.Right.Y >= 0.1f)
+            {
+                if (_triggerRLocation.Z <= -30f)
+                {
+                    _triggerRLocation.Z += _triggerRvelocityZ;
+                }
+            }
+
+            if (gamePadState.ThumbSticks.Right.Y <= 0f)
+            {
+                if (_triggerRLocation.Z >= -40f)
+                {
+                    _triggerRLocation.Z -= _triggerRvelocityZ;
+                }
+            }
+
+            if (gamePadState.ThumbSticks.Right.X <= -0.1f)
+            {
+                if (_triggerRLocation.X <= -5f)
+                {
+                    _triggerRLocation.X += _triggerRvelocityX;
+                }
+            }
+
+            if (gamePadState.ThumbSticks.Right.X >= 0f)
+            {
+                if (_triggerRLocation.X >= -10)
+                {
+                    _triggerRLocation.X -= _triggerRvelocityX;
+                }
+            }
+
+            if (gamePadState.ThumbSticks.Left.X >= 0.1f)
+            {
+                if (_triggerLLocation.X >= 5f)
+                {
+                    _triggerLLocation.X -= _triggerLvelocityX;
+                }
+            }
+
+            if (gamePadState.ThumbSticks.Left.X <= 0f)
+            {
+                if (_triggerLLocation.X <= 10f)
+                {
+                    _triggerLLocation.X += _triggerLvelocityX;
+                }
+            }
+            #endregion
+            
+            //Knopfdruck beschleunigt Ball -- Nur ein Test!    
+            if(gamePadState.Buttons.A == ButtonState.Pressed)
+            {
+                _velocityZ *= 1.02f;
+            }
 
             /*System.Diagnostics.Debug.WriteLine(_pinballLocation.Y + " - Aktuell Y");
             System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.Y + " - Alt Y");
@@ -756,6 +842,7 @@ namespace PinballProjekt
             Matrix _sideBumperRMatrix = Matrix.CreateTranslation(_sideBumperRLocation);
             Matrix _startRampeMatrix = Matrix.CreateTranslation(_startRampeLocation);
             Matrix _grenzeRechtsMatrix = Matrix.CreateTranslation(_grenzeRechtsLocation);
+            Matrix _grenzeLinksMatrix = Matrix.CreateTranslation(_grenzeLinksLocation);
             Matrix _bumperWand1Matrix = Matrix.CreateTranslation(_bumperWand1Location);
 
             DrawModel(_platte, _platteMatrix, viewMatrix, projectionMatrix);
@@ -770,6 +857,7 @@ namespace PinballProjekt
             DrawModel(_sideBumperR, _sideBumperRMatrix, viewMatrix, projectionMatrix);
             DrawModel(_startRampe, _startRampeMatrix, viewMatrix, projectionMatrix);
             DrawModel(_grenzeRechts, _grenzeRechtsMatrix, viewMatrix, projectionMatrix);
+            DrawModel(_grenzeLinks, _grenzeLinksMatrix, viewMatrix, projectionMatrix);
             DrawModel(_bumperWand1, _bumperWand1Matrix, viewMatrix, projectionMatrix);
 
             /*foreach (ModelMesh mesh in _pinball.Meshes)
