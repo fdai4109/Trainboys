@@ -31,6 +31,7 @@ namespace PinballProjekt
         Vector3 _sideBumperLLocation = new Vector3(15f, -1f, -10f);
         Vector3 _sideBumperRLocation = new Vector3(-15f, -1f, -10f);
         Vector3 _startRampeLocation = new Vector3(0f, -1f, -1f);
+        Vector3 _grenzeRechtsLocation = new Vector3(-18f, -1f, -44f);
         #endregion
 
         #region Models
@@ -45,6 +46,7 @@ namespace PinballProjekt
         Model _sideBumperR;
         Model _sideBumperL;
         Model _startRampe;
+        Model _grenzeRechts;
         #endregion
 
         #region Gespeicherte Locations
@@ -112,6 +114,7 @@ namespace PinballProjekt
             _sideBumperR = Content.Load<Model>("SideBumper");
             _sideBumperL = Content.Load<Model>("SideBumper");
             _startRampe = Content.Load<Model>("Rampe");
+            _grenzeRechts = Content.Load<Model>("GrenzeRechts");
             #endregion
         }
 
@@ -146,6 +149,7 @@ namespace PinballProjekt
             Matrix _sideBumperLMatrix = Matrix.CreateTranslation(_sideBumperLLocation);
             Matrix _sideBumperRMatrix = Matrix.CreateTranslation(_sideBumperRLocation);
             Matrix _startRampeMatrix = Matrix.CreateTranslation(_startRampeLocation);
+            Matrix _grenzeRechtsMatrix = Matrix.CreateTranslation(_grenzeRechtsLocation);
             #endregion
 
             /* _streckeX = _pinballLocationOLD.X - _pinballLocation.X;
@@ -691,6 +695,7 @@ namespace PinballProjekt
             Matrix _sideBumperLMatrix = Matrix.CreateTranslation(_sideBumperLLocation);
             Matrix _sideBumperRMatrix = Matrix.CreateTranslation(_sideBumperRLocation);
             Matrix _startRampeMatrix = Matrix.CreateTranslation(_startRampeLocation);
+            Matrix _grenzeRechtsMatrix = Matrix.CreateTranslation(_grenzeRechtsLocation);
 
             DrawModel(_platte, _platteMatrix, viewMatrix, projectionMatrix);
             DrawModel(_pinball, _pinballMatrix, viewMatrix, projectionMatrix);
@@ -703,6 +708,7 @@ namespace PinballProjekt
             DrawModel(_sideBumperL, _sideBumperLMatrix, viewMatrix, projectionMatrix);
             DrawModel(_sideBumperR, _sideBumperRMatrix, viewMatrix, projectionMatrix);
             DrawModel(_startRampe, _startRampeMatrix, viewMatrix, projectionMatrix);
+            DrawModel(_grenzeRechts, _grenzeRechtsMatrix, viewMatrix, projectionMatrix);
 
             /*foreach (ModelMesh mesh in _pinball.Meshes)
             {
