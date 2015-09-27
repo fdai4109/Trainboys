@@ -799,7 +799,9 @@ namespace PinballProjekt
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    effect.AmbientLightColor = new Vector3(1f, 0, 0);
+                    //effect.AmbientLightColor = new Vector3(1f, 0, 0);
+                    //effect.EnableDefaultLighting();
+                    //effect.DiffuseColor = new Vector3(10, 0, 0);
                     effect.View = view;
                     effect.World = world;
                     effect.Projection = projection;
