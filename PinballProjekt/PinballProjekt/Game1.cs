@@ -40,7 +40,8 @@ namespace PinballProjekt
         Vector3 _startRampeLocation = new Vector3(0f, -1f, -1f);
         Vector3 _grenzeRechtsLocation = new Vector3(-18f, -1f, -44f);
         Vector3 _grenzeLinksLocation = new Vector3(+18f, -1f, -44f);
-        Vector3 _bumperWand1Location = new Vector3(0f, -1f, 0);
+        Vector3 _movingBumper1Location = new Vector3(-15f, -1f, 0f);
+        //Vector3 _bumperWand1Location = new Vector3(0f, -1f, 0);
         #endregion
 
         #region Models
@@ -57,7 +58,8 @@ namespace PinballProjekt
         Model _startRampe;
         Model _grenzeRechts;
         Model _grenzeLinks;
-        Model _bumperWand1;
+        Model _movingBumper1;
+        //Model _bumperWand1;
         #endregion
 
         #region Gespeicherte Locations
@@ -124,7 +126,8 @@ namespace PinballProjekt
             _startRampe = Content.Load<Model>("Rampe");
             _grenzeRechts = Content.Load<Model>("GrenzeRechts");
             _grenzeLinks = Content.Load<Model>("GrenzeLinks");
-            _bumperWand1 = Content.Load<Model>("BumperWand");
+            _movingBumper1 = Content.Load<Model>("Bumper");
+            //_bumperWand1 = Content.Load<Model>("BumperWand");
             #endregion
 
             base.Initialize();
@@ -309,6 +312,14 @@ namespace PinballProjekt
             }
             #endregion
 
+            #region MovingBumper-Abfragen
+            if (MovingBumper1())
+            {
+                _velocityZ *= -1.1f;
+                score += 15;
+            }
+            #endregion
+
             #region Startrampe
             /*if (StartRampeUnten())
             {
@@ -329,7 +340,7 @@ namespace PinballProjekt
             #endregion
 
             #region Mauern Startrampe
-            if(rechteWand())
+            if (rechteWand())
             {
                 _velocityX *= -1;
             }
@@ -540,14 +551,13 @@ namespace PinballProjekt
                     _triggerLLocation.X += _triggerLvelocityX;
                 }
             }
-            #endregion
-
 
             //Knopfdruck beschleunigt Ball -- Nur ein Test!    
             if (gamePadState.Buttons.A == ButtonState.Pressed)
             {
                 _velocityZ *= 1.02f;
             }
+            #endregion
 
             /*System.Diagnostics.Debug.WriteLine(_pinballLocation.Y + " - Aktuell Y");
             System.Diagnostics.Debug.WriteLine(_pinballLocationOLD.Y + " - Alt Y");
@@ -560,6 +570,8 @@ namespace PinballProjekt
             System.Diagnostics.Debug.WriteLine(_velocityZ + "- Vel Y");*/
 
             System.Diagnostics.Debug.WriteLine(_velocityZ);
+
+            moveMovingBumper1();
 
             _pinballLocation.Z += _velocityZ;
             _pinballLocation.X += _velocityX;
@@ -669,7 +681,6 @@ namespace PinballProjekt
         #region Bumper-Bool-Funktionen-Distance
         private bool Bumper()
         {
-
             if (_pinballLocation.X >= _bumperLocation.X)
             {
                 Xdis = _pinballLocation.X - _bumperLocation.X;
@@ -688,14 +699,13 @@ namespace PinballProjekt
                 Zdis = _bumperLocation.Z - _pinballLocation.Z;
             }
 
-
             distance = Math.Sqrt(Math.Pow(Xdis, 2) + Math.Pow(Zdis, 2)) - 3;
+
             if (distance <= 0)
             {
                 return true;
             }
             return false;
-
         }
 
         private bool Bumper2()
@@ -718,14 +728,13 @@ namespace PinballProjekt
                 Zdis = _bumper2Location.Z - _pinballLocation.Z;
             }
 
-
             distance = Math.Sqrt(Math.Pow(Xdis, 2) + Math.Pow(Zdis, 2)) - 3;
+
             if (distance <= 0)
             {
                 return true;
             }
             return false;
-
         }
 
         private bool Bumper3()
@@ -748,14 +757,13 @@ namespace PinballProjekt
                 Zdis = _bumper3Location.Z - _pinballLocation.Z;
             }
 
-
             distance = Math.Sqrt(Math.Pow(Xdis, 2) + Math.Pow(Zdis, 2)) - 3;
+
             if (distance <= 0)
             {
                 return true;
             }
             return false;
-
         }
 
         private bool Bumper4()
@@ -777,15 +785,45 @@ namespace PinballProjekt
             {
                 Zdis = _bumper4Location.Z - _pinballLocation.Z;
             }
-
-
+            
             distance = Math.Sqrt(Math.Pow(Xdis, 2) + Math.Pow(Zdis, 2)) - 3;
+
             if (distance <= 0)
             {
                 return true;
             }
             return false;
+        }
+        #endregion
 
+        #region MovingBumper-Bool-Funktionen
+        private bool MovingBumper1()
+        {
+            if (_pinballLocation.X >= _movingBumper1Location.X)
+            {
+                Xdis = _pinballLocation.X - _movingBumper1Location.X;
+            }
+            else
+            {
+                Xdis = _movingBumper1Location.X - _pinballLocation.X;
+            }
+
+            if (_pinballLocation.Z >= _movingBumper1Location.Z)
+            {
+                Zdis = _pinballLocation.Z - _movingBumper1Location.Z;
+            }
+            else
+            {
+                Zdis = _movingBumper1Location.Z - _pinballLocation.Z;
+            }
+
+            distance = Math.Sqrt(Math.Pow(Xdis, 2) + Math.Pow(Zdis, 2)) - 3;
+
+            if (distance <= 0)
+            {
+                return true;
+            }
+            return false;
         }
         #endregion
 
@@ -950,6 +988,36 @@ namespace PinballProjekt
         }
         #endregion
 
+        #region MovingBumper1-Funktion
+        bool _movingBumper1Right = true;
+        bool _movingBumper1Left = false;
+
+        private void moveMovingBumper1()
+        {
+            if(_movingBumper1Location.X <= -15f)
+            {
+                _movingBumper1Right = true;
+                _movingBumper1Left = false;
+            }
+
+            if(_movingBumper1Location.X >= 15f)
+            {
+                _movingBumper1Left = true;
+                _movingBumper1Right = false;
+            }
+
+            if (_movingBumper1Right)
+            {
+                _movingBumper1Location.X += 0.2f;
+            }
+
+            if(_movingBumper1Left)
+            {
+                _movingBumper1Location.X -= 0.2f;
+            }
+        }
+        #endregion
+
         /*public Rectangle Box(int x, int y, int breite, int höhe)
         {
             Rectangle collision = new Rectangle(x, y, breite, höhe);
@@ -977,7 +1045,8 @@ namespace PinballProjekt
             Matrix _startRampeMatrix = Matrix.CreateTranslation(_startRampeLocation);
             Matrix _grenzeRechtsMatrix = Matrix.CreateTranslation(_grenzeRechtsLocation);
             Matrix _grenzeLinksMatrix = Matrix.CreateTranslation(_grenzeLinksLocation);
-            Matrix _bumperWand1Matrix = Matrix.CreateTranslation(_bumperWand1Location);
+            Matrix _movingBumper1Matrix = Matrix.CreateTranslation(_movingBumper1Location);
+            //Matrix _bumperWand1Matrix = Matrix.CreateTranslation(_bumperWand1Location);
 
             DrawModel(_platte, _platteMatrix, viewMatrix, projectionMatrix);
             DrawModel(_pinball, _pinballMatrix, viewMatrix, projectionMatrix);
@@ -992,7 +1061,8 @@ namespace PinballProjekt
             DrawModel(_startRampe, _startRampeMatrix, viewMatrix, projectionMatrix);
             DrawModel(_grenzeRechts, _grenzeRechtsMatrix, viewMatrix, projectionMatrix);
             DrawModel(_grenzeLinks, _grenzeLinksMatrix, viewMatrix, projectionMatrix);
-            DrawModel(_bumperWand1, _bumperWand1Matrix, viewMatrix, projectionMatrix);
+            DrawModel(_movingBumper1, _movingBumper1Matrix, viewMatrix, projectionMatrix);
+            //DrawModel(_bumperWand1, _bumperWand1Matrix, viewMatrix, projectionMatrix);
 
             /*foreach (ModelMesh mesh in _pinball.Meshes)
             {
