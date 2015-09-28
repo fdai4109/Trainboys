@@ -83,7 +83,6 @@ namespace PinballProjekt
         #endregion
 
         #region Bools
-
         bool orbit; //Orbit oder nicht Orbit?
         #endregion
 
@@ -99,8 +98,6 @@ namespace PinballProjekt
             graphics.PreferredBackBufferHeight = 720;
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
-
-            base.Initialize();
 
             #region Kamera-Setup
             camTarget = new Vector3(0f, 0f, 0f);
@@ -129,6 +126,8 @@ namespace PinballProjekt
             _grenzeLinks = Content.Load<Model>("GrenzeLinks");
             _bumperWand1 = Content.Load<Model>("BumperWand");
             #endregion
+
+            base.Initialize();
         }
 
         protected override void LoadContent()
@@ -186,6 +185,28 @@ namespace PinballProjekt
                 _timer = 0f;
             }
 
+            #region Geschwindigkeitsbegrenzung der Kugel
+            if(_velocityZ >= 1.8f)
+            {
+                _velocityZ = 1.8f;
+            }
+
+            if (_velocityZ <= -1.8f)
+            {
+                _velocityZ = -1.8f;
+            }
+
+            if(_velocityX >= 1.8f)
+            {
+                _velocityX = 1.8f;
+            }
+
+            if(_velocityX <= -1.8f)
+            {
+                _velocityX = -1.8f;
+            }
+            #endregion
+
             #region Wandkollision
             if (EdgeCollisionObenUnten())
             {
@@ -206,14 +227,14 @@ namespace PinballProjekt
             if (Rtrigger())
             {
                 //_velocityX *= 1f;
-                _velocityZ *= -1f;
+                _velocityZ *= -1.2f;
                 //System.Diagnostics.Debug.WriteLine("TriggerR-COLLISION");
             }
 
             if (Ltrigger())
             {
                 //_velocityX *= 1f;
-                _velocityZ *= -1f;
+                _velocityZ *= -1.2f;
                 //System.Diagnostics.Debug.WriteLine("TriggerL-COLLISION");
             }
             #endregion
@@ -383,11 +404,9 @@ namespace PinballProjekt
             viewMatrix = Matrix.CreateLookAt(camPosition, camTarget, Vector3.Up);
             #endregion
 
-            System.Diagnostics.Debug.WriteLine(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y);
-
             //Eine Steuerung für sich auswählen und andere komplett auskommentieren.
             #region Triggerbewegung - Tastatur
-                        
+            /*            
             if (Keyboard.GetState().IsKeyDown(Keys.K))
             {
                 if (_triggerLLocation.Z <= -30f)
@@ -451,14 +470,14 @@ namespace PinballProjekt
                     _triggerLLocation.X += _triggerLvelocityX;
                 }
             }
-
+            */
             #endregion
 
             #region Triggerbewegung - Controller
             //Beide Trigger lassen sich mit dem jeweiligen Thumbstick des Xbox-Controllers steuern.
             //Funktioniert nur, wenn Tastatursteuerung auskommentiert ist.
 
-            /*if (gamePadState.ThumbSticks.Left.Y >= 0.1f)
+            if (gamePadState.ThumbSticks.Left.Y >= 0.1f)
             {
                 if (_triggerLLocation.Z <= -30f)
                 {
@@ -520,7 +539,7 @@ namespace PinballProjekt
                 {
                     _triggerLLocation.X += _triggerLvelocityX;
                 }
-            }*/
+            }
             #endregion
 
 
