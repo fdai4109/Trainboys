@@ -21,12 +21,9 @@ namespace PinballProjekt
         Vector3 camTarget;
         Vector3 camPosition;
         Vector3 _platteLocation = new Vector3(0f, 0f, 0f);
-<<<<<<< HEAD
         Vector3 _pinballLocation = new Vector3(0f, 0f, 30f);
         //Vector3 _pinballLocation = new Vector3(-23f, 0f, -48f);
-=======
-        Vector3 _pinballLocation = new Vector3(0f, 0f, 0f);
->>>>>>> origin/master
+        //Vector3 _pinballLocation = new Vector3(0f, 0f, 0f);
         Vector3 _triggerRLocation = new Vector3(-10f, -1f, -40f);
         Vector3 _triggerLLocation = new Vector3(10f, -1f, -40f);
         Vector3 _bumperLocation = new Vector3(0f, 0f, 20f);
@@ -287,10 +284,7 @@ namespace PinballProjekt
             }
             #endregion
 
-<<<<<<< HEAD
-=======
             #region Startrampe
->>>>>>> origin/master
             /*if (StartRampeUnten())
             {
                 _velocityZ = 0.3f;
@@ -307,8 +301,6 @@ namespace PinballProjekt
                 _velocityX = -0.01f;
                 _velocityZ = -0.1f;
             }*/
-<<<<<<< HEAD
-=======
             #endregion
 
             #region Mauern Startrampe
@@ -327,7 +319,6 @@ namespace PinballProjekt
                 _velocityX *= -1;
             }
             #endregion
->>>>>>> origin/master
 
             /*if (IsCollision(_pinball, _pinballMatrix, _platte, _platteMatrix))
             {
@@ -724,9 +715,6 @@ namespace PinballProjekt
             return false;
         }
 
-<<<<<<< HEAD
-        /*private bool StartRampeUnten()
-=======
         private bool GrenzeMitte()
         {
             if(_pinballLocation.Z <= -42f && _pinballLocation.X <= 15f && _pinballLocation.X >= -15f)
@@ -738,8 +726,8 @@ namespace PinballProjekt
         #endregion
 
         #region Startrampe-Bool-Funktionen
+        /*
         private bool StartRampeUnten()
->>>>>>> origin/master
         {
             if (_pinballLocation.X >= -23 && _pinballLocation.X <= -22)
             {
@@ -773,10 +761,7 @@ namespace PinballProjekt
                 }
             }
             return false;
-<<<<<<< HEAD
         }*/
-=======
-        }
         #endregion
 
         #region Startrampenbegrenzung Bool-Funktionen
@@ -816,8 +801,6 @@ namespace PinballProjekt
             return false;
         }
         #endregion
-
->>>>>>> origin/master
 
         /*public Rectangle Box(int x, int y, int breite, int höhe)
         {
