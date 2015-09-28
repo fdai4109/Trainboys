@@ -28,10 +28,7 @@ namespace PinballProjekt
         Vector3 _platteLocation = new Vector3(0f, 0f, 0f);
         Vector3 _pinballLocation = new Vector3(0f, 0f, 30f);
         //Vector3 _pinballLocation = new Vector3(-23f, 0f, -48f);
-<<<<<<< HEAD
         //Vector3 _pinballLocation = new Vector3(0f, 0f, 0f);
-=======
->>>>>>> b13dca03c3f7c6c45b2a1fabeb87a7e8d6bb4451
         Vector3 _triggerRLocation = new Vector3(-10f, -1f, -40f);
         Vector3 _triggerLLocation = new Vector3(10f, -1f, -40f);
         Vector3 _bumperLocation = new Vector3(0f, 0f, 20f);
@@ -291,13 +288,7 @@ namespace PinballProjekt
             }
             #endregion
 
-<<<<<<< HEAD
             #region Startrampe
-=======
-
-            #region Startrampe
-
->>>>>>> b13dca03c3f7c6c45b2a1fabeb87a7e8d6bb4451
             /*if (StartRampeUnten())
             {
                 _velocityZ = 0.3f;
@@ -314,10 +305,6 @@ namespace PinballProjekt
                 _velocityX = -0.01f;
                 _velocityZ = -0.1f;
             }*/
-<<<<<<< HEAD
-=======
-
->>>>>>> b13dca03c3f7c6c45b2a1fabeb87a7e8d6bb4451
             #endregion
 
             #region Mauern Startrampe
@@ -464,10 +451,10 @@ namespace PinballProjekt
                     _triggerLLocation.X += _triggerLvelocityX;
                 }
             }
-            
+
             #endregion
 
-            //#region Triggerbewegung - Controller
+            #region Triggerbewegung - Controller
             //Beide Trigger lassen sich mit dem jeweiligen Thumbstick des Xbox-Controllers steuern.
             //Funktioniert nur, wenn Tastatursteuerung auskommentiert ist.
 
@@ -533,11 +520,12 @@ namespace PinballProjekt
                 {
                     _triggerLLocation.X += _triggerLvelocityX;
                 }
-            }
+            }*/
             #endregion
-            */
+
+
             //Knopfdruck beschleunigt Ball -- Nur ein Test!    
-            if(gamePadState.Buttons.A == ButtonState.Pressed)
+            if (gamePadState.Buttons.A == ButtonState.Pressed)
             {
                 _velocityZ *= 1.02f;
             }
@@ -658,6 +646,7 @@ namespace PinballProjekt
             return false;
         }
         #endregion
+
         #region Bumper-Bool-Funktionen-Distance
         private bool Bumper()
         {
@@ -780,8 +769,9 @@ namespace PinballProjekt
 
         }
         #endregion
-        /*#region Bumper-Bool-Funktionen
-        private bool Bumper()
+
+        #region Bumper-Bool-Funktionen
+        /*private bool Bumper()
         {
             
             if (_pinballLocation.Z <= 22f && _pinballLocation.Z >= 18f)
@@ -832,8 +822,8 @@ namespace PinballProjekt
                 }
             }
             return false;
-        }
-        #endregion*/
+        }*/
+        #endregion
 
         #region Grenzen-Bool-Funktionen
         private bool GrenzeRechts()
@@ -854,11 +844,6 @@ namespace PinballProjekt
             return false;
         }
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> b13dca03c3f7c6c45b2a1fabeb87a7e8d6bb4451
         private bool GrenzeMitte()
         {
             if(_pinballLocation.Z <= -42f && _pinballLocation.X <= 15f && _pinballLocation.X >= -15f)
@@ -872,10 +857,6 @@ namespace PinballProjekt
         #region Startrampe-Bool-Funktionen
         /*
         private bool StartRampeUnten()
-<<<<<<< HEAD
-=======
-
->>>>>>> b13dca03c3f7c6c45b2a1fabeb87a7e8d6bb4451
         {
             if (_pinballLocation.X >= -23 && _pinballLocation.X <= -22)
             {
@@ -909,14 +890,7 @@ namespace PinballProjekt
                 }
             }
             return false;
-<<<<<<< HEAD
         }*/
-=======
-
-        }
-
-        
->>>>>>> b13dca03c3f7c6c45b2a1fabeb87a7e8d6bb4451
         #endregion
 
         #region Startrampenbegrenzung Bool-Funktionen
