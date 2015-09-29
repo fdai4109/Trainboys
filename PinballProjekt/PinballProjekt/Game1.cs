@@ -17,8 +17,7 @@ namespace PinballProjekt
         double distance;
         double Xdis;
         double Zdis;
-        double velX;
-        double velZ;
+
 
         Matrix projectionMatrix;
         Matrix viewMatrix;
@@ -251,13 +250,13 @@ namespace PinballProjekt
             if (GrenzeRechts())
             {
                 _velocityZ *= -1.2f;
-                System.Diagnostics.Debug.WriteLine("Grenzen-COLLISION");
+                /*System.Diagnostics.Debug.WriteLine("Grenzen-COLLISION");*/
             }
 
             if(GrenzeLinks())
             {
                 _velocityZ *= -1.2f;
-                System.Diagnostics.Debug.WriteLine("Grenzen-COLLISION");
+                /*System.Diagnostics.Debug.WriteLine("Grenzen-COLLISION");*/
             }
 
             if(GrenzeMitte())
@@ -299,7 +298,7 @@ namespace PinballProjekt
                     _velocityX *= -1;
                     _velocityZ *= -1;
                 }
-
+                System.Diagnostics.Debug.WriteLine("B1: "+_bumperLocation + " zu " + _pinballLocation);
                 score += 5;
             }
 
@@ -318,7 +317,7 @@ namespace PinballProjekt
                     _velocityX *= -1;
                     _velocityZ *= -1;
                 }
-
+                System.Diagnostics.Debug.WriteLine("B2: " + _bumper2Location + " zu " + _pinballLocation);
                 score += 5;
             }
 
@@ -337,7 +336,7 @@ namespace PinballProjekt
                     _velocityX *= -1;
                     _velocityZ *= -1;
                 }
-
+                System.Diagnostics.Debug.WriteLine("B3: " + _bumper3Location + " zu " + _pinballLocation);
                 score += 5;
             }
 
@@ -358,6 +357,7 @@ namespace PinballProjekt
                 }
 
                 score += 5;
+                System.Diagnostics.Debug.WriteLine("B4: " + _bumper4Location + " zu " + _pinballLocation);
             }
             #endregion
 
@@ -377,6 +377,7 @@ namespace PinballProjekt
                     _velocityX *= -1.1f;
                     _velocityZ *= -1.1f;
                 }
+                System.Diagnostics.Debug.WriteLine("M1: "+_movingBumper1Location + " zu " + _pinballLocation);
                 score += 15;
             }
 
@@ -395,6 +396,7 @@ namespace PinballProjekt
                     _velocityX *= -1.1f;
                     _velocityZ *= -1.1f;
                 }
+                System.Diagnostics.Debug.WriteLine("M2: " + _movingBumper2Location + " zu " + _pinballLocation);
                 score += 15;
             }
             #endregion
@@ -648,7 +650,7 @@ namespace PinballProjekt
             System.Diagnostics.Debug.WriteLine(_velocityX + "- Vel X");
             System.Diagnostics.Debug.WriteLine(_velocityZ + "- Vel Y");*/
 
-            System.Diagnostics.Debug.WriteLine(_velocityZ);
+            /*System.Diagnostics.Debug.WriteLine(_velocityZ);*/
 
             moveMovingBumper1();
             moveMovingBumper2();
