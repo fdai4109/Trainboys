@@ -17,6 +17,8 @@ namespace PinballProjekt
         double distance;
         double Xdis;
         double Zdis;
+        double velX;
+        double velZ;
 
         Matrix projectionMatrix;
         Matrix viewMatrix;
@@ -26,7 +28,7 @@ namespace PinballProjekt
         Vector3 camTarget;
         Vector3 camPosition;
         Vector3 _platteLocation = new Vector3(0f, 0f, 0f);
-        Vector3 _pinballLocation = new Vector3(0f, 0f, 30f);
+        Vector3 _pinballLocation = new Vector3(0f, 0f, 35f);
         //Vector3 _pinballLocation = new Vector3(-23f, 0f, -48f);
         //Vector3 _pinballLocation = new Vector3(0f, 0f, 0f);
         Vector3 _triggerRLocation = new Vector3(-10f, -1f, -40f);
@@ -280,51 +282,119 @@ namespace PinballProjekt
                 score += 10;
             }
             #endregion
-
+            
             #region Bumper-Abfragen
             if (Bumper())
             {
-                //_velocityX *= 1;
-                _velocityZ *= -1;
+                if (_pinballLocation.Z <= _bumperLocation.Z + 1 && _pinballLocation.Z >= _bumperLocation.Z-1)
+                {
+                    _velocityX *= -1;
+                }
+                else if (_pinballLocation.X <= _bumperLocation.X + 1 && _pinballLocation.X >= _bumperLocation.X - 1)
+                {
+                    _velocityZ *= -1;
+                }
+                else
+                {
+                    _velocityX *= -1;
+                    _velocityZ *= -1;
+                }
+
                 score += 5;
-                //System.Diagnostics.Debug.WriteLine(_pinballLocation);
             }
 
             if (Bumper2())
             {
-                //_velocityX *= 1;
-                _velocityZ *= -1;
+                if (_pinballLocation.Z <= _bumper2Location.Z + 1 && _pinballLocation.Z >= _bumper2Location.Z - 1)
+                {
+                    _velocityX *= -1;
+                }
+                else if (_pinballLocation.X <= _bumper2Location.X + 1 && _pinballLocation.X >= _bumper2Location.X - 1)
+                {
+                    _velocityZ *= -1;
+                }
+                else
+                {
+                    _velocityX *= -1;
+                    _velocityZ *= -1;
+                }
+
                 score += 5;
-                //System.Diagnostics.Debug.WriteLine(_pinballLocation);
             }
 
             if (Bumper3())
             {
-                //_velocityX *= 1;
-                _velocityZ *= -1;
+                if (_pinballLocation.Z <= _bumper3Location.Z + 1 && _pinballLocation.Z >= _bumper3Location.Z - 1)
+                {
+                    _velocityX *= -1;
+                }
+                else if (_pinballLocation.X <= _bumper3Location.X + 1 && _pinballLocation.X >= _bumper3Location.X - 1)
+                {
+                    _velocityZ *= -1;
+                }
+                else
+                {
+                    _velocityX *= -1;
+                    _velocityZ *= -1;
+                }
+
                 score += 5;
-                //System.Diagnostics.Debug.WriteLine(_pinballLocation);
             }
 
             if (Bumper4())
             {
-                //_velocityX *= 1;
-                _velocityZ *= -1;
+                if (_pinballLocation.Z <= _bumper4Location.Z + 1 && _pinballLocation.Z >= _bumper4Location.Z - 1)
+                {
+                    _velocityX *= -1;
+                }
+                else if (_pinballLocation.X <= _bumper4Location.X + 1 && _pinballLocation.X >= _bumper4Location.X - 1)
+                {
+                    _velocityZ *= -1;
+                }
+                else
+                {
+                    _velocityX *= -1;
+                    _velocityZ *= -1;
+                }
+
                 score += 5;
-                //System.Diagnostics.Debug.WriteLine(_pinballLocation);
             }
             #endregion
 
             #region MovingBumper-Abfragen
             if (MovingBumper1())
             {
-                _velocityZ *= -1.1f;
+                if (_pinballLocation.Z <= _movingBumper1Location.Z + 1 && _pinballLocation.Z >= _movingBumper1Location.Z - 1)
+                {
+                    _velocityX *= -1.1f;
+                }
+                else if (_pinballLocation.X <= _movingBumper1Location.X + 1 && _pinballLocation.X >= _movingBumper1Location.X - 1)
+                {
+                    _velocityZ *= -1.1f;
+                }
+                else
+                {
+                    _velocityX *= -1.1f;
+                    _velocityZ *= -1.1f;
+                }
                 score += 15;
             }
 
             if (MovingBumper2())
             {
-                _velocityZ *= -1.1f;
+                if (_pinballLocation.Z <= _movingBumper2Location.Z + 1 && _pinballLocation.Z >= _movingBumper2Location.Z - 1)
+                {
+                    _velocityX *= -1.1f;
+                }
+                else if (_pinballLocation.X <= _movingBumper2Location.X + 1 && _pinballLocation.X >= _movingBumper2Location.X - 1)
+                {
+                    _velocityZ *= -1.1f;
+                }
+                else
+                {
+                    _velocityX *= -1.1f;
+                    _velocityZ *= -1.1f;
+                }
                 score += 15;
             }
             #endregion
