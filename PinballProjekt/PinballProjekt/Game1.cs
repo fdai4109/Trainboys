@@ -17,6 +17,7 @@ namespace PinballProjekt
         double distance;
         double Xdis;
         double Zdis;
+        String Colli;
 
 
         Matrix projectionMatrix;
@@ -217,6 +218,7 @@ namespace PinballProjekt
             #region Wandkollision
             if (EdgeCollisionObenUnten())
             {
+                Colli = "null";
                 //_pinballLocation += einfall(_pinballLocationOLD, _collisionPosition);
                 //_velocityX *= 1f;
                 _velocityZ *= -1f;
@@ -225,6 +227,7 @@ namespace PinballProjekt
 
             if (EdgeCollisionRechtsLinks())
             {
+                Colli = "null";
                 _velocityX *= -1;
                 //_velocityZ *= 1;
             }
@@ -233,6 +236,7 @@ namespace PinballProjekt
             #region Trigger-Abfragen
             if (Rtrigger())
             {
+                Colli = "null";
                 //_velocityX *= 1f;
                 _velocityZ *= -1.2f;
                 //System.Diagnostics.Debug.WriteLine("TriggerR-COLLISION");
@@ -240,6 +244,7 @@ namespace PinballProjekt
 
             if (Ltrigger())
             {
+                Colli = "null";
                 //_velocityX *= 1f;
                 _velocityZ *= -1.2f;
                 //System.Diagnostics.Debug.WriteLine("TriggerL-COLLISION");
@@ -249,18 +254,21 @@ namespace PinballProjekt
             #region Grenzen-Abfragen
             if (GrenzeRechts())
             {
+                Colli = "null";
                 _velocityZ *= -1.2f;
                 /*System.Diagnostics.Debug.WriteLine("Grenzen-COLLISION");*/
             }
 
             if(GrenzeLinks())
             {
+                Colli = "null";
                 _velocityZ *= -1.2f;
                 /*System.Diagnostics.Debug.WriteLine("Grenzen-COLLISION");*/
             }
 
             if(GrenzeMitte())
             {
+                Colli = "null";
                 _pinballLocation = _pinballLocationOLD;
                 score = 0;
                 _velocityX = 0.1f;
@@ -271,133 +279,166 @@ namespace PinballProjekt
             #region SideBumper-Abfragen
             if (LsideBumper())
             {
-                _velocityX *= -1;
-                score += 10;
+                if (Colli != "S1")
+                {
+                    Colli = "S1";
+                    _velocityX *= -1;
+                    score += 10;
+                }
             }
 
             if (RsideBumper())
             {
-                _velocityX *= -1;
-                score += 10;
+                if (Colli != "S2")
+                {
+                    Colli = "S2";
+                    _velocityX *= -1;
+                    score += 10;
+                }
             }
             #endregion
             
             #region Bumper-Abfragen
             if (Bumper())
             {
-                if (_pinballLocation.Z <= _bumperLocation.Z + 1 && _pinballLocation.Z >= _bumperLocation.Z-1)
+                if (Colli != "B1")
                 {
-                    _velocityX *= -1;
+                    Colli = "B1";
+                    if (_pinballLocation.Z <= _bumperLocation.Z + 1 && _pinballLocation.Z >= _bumperLocation.Z - 1)
+                    {
+                        _velocityX *= -1;
+                    }
+                    else if (_pinballLocation.X <= _bumperLocation.X + 1 && _pinballLocation.X >= _bumperLocation.X - 1)
+                    {
+                        _velocityZ *= -1;
+                    }
+                    else
+                    {
+                        _velocityX *= -1;
+                        _velocityZ *= -1;
+                    }
+                    System.Diagnostics.Debug.WriteLine("B1: " + _bumperLocation + " zu " + _pinballLocation);
+                    score += 5;
                 }
-                else if (_pinballLocation.X <= _bumperLocation.X + 1 && _pinballLocation.X >= _bumperLocation.X - 1)
-                {
-                    _velocityZ *= -1;
-                }
-                else
-                {
-                    _velocityX *= -1;
-                    _velocityZ *= -1;
-                }
-                System.Diagnostics.Debug.WriteLine("B1: "+_bumperLocation + " zu " + _pinballLocation);
-                score += 5;
             }
 
             if (Bumper2())
             {
-                if (_pinballLocation.Z <= _bumper2Location.Z + 1 && _pinballLocation.Z >= _bumper2Location.Z - 1)
+                if (Colli != "B2")
                 {
-                    _velocityX *= -1;
+                    Colli = "B2";
+                    if (_pinballLocation.Z <= _bumper2Location.Z + 1 && _pinballLocation.Z >= _bumper2Location.Z - 1)
+                    {
+                        _velocityX *= -1;
+                    }
+                    else if (_pinballLocation.X <= _bumper2Location.X + 1 && _pinballLocation.X >= _bumper2Location.X - 1)
+                    {
+                        _velocityZ *= -1;
+                    }
+                    else
+                    {
+                        _velocityX *= -1;
+                        _velocityZ *= -1;
+                    }
+                    System.Diagnostics.Debug.WriteLine("B2: " + _bumper2Location + " zu " + _pinballLocation);
+                    score += 5;
                 }
-                else if (_pinballLocation.X <= _bumper2Location.X + 1 && _pinballLocation.X >= _bumper2Location.X - 1)
-                {
-                    _velocityZ *= -1;
-                }
-                else
-                {
-                    _velocityX *= -1;
-                    _velocityZ *= -1;
-                }
-                System.Diagnostics.Debug.WriteLine("B2: " + _bumper2Location + " zu " + _pinballLocation);
-                score += 5;
             }
 
             if (Bumper3())
             {
-                if (_pinballLocation.Z <= _bumper3Location.Z + 1 && _pinballLocation.Z >= _bumper3Location.Z - 1)
+                if (Colli != "B3")
                 {
-                    _velocityX *= -1;
+                    Colli = "B3";
+                    if (_pinballLocation.Z <= _bumper3Location.Z + 1 && _pinballLocation.Z >= _bumper3Location.Z - 1)
+                    {
+                        _velocityX *= -1;
+                    }
+                    else if (_pinballLocation.X <= _bumper3Location.X + 1 && _pinballLocation.X >= _bumper3Location.X - 1)
+                    {
+                        _velocityZ *= -1;
+                    }
+                    else
+                    {
+                        _velocityX *= -1;
+                        _velocityZ *= -1;
+                    }
+                    System.Diagnostics.Debug.WriteLine("B3: " + _bumper3Location + " zu " + _pinballLocation);
+                    score += 5;
                 }
-                else if (_pinballLocation.X <= _bumper3Location.X + 1 && _pinballLocation.X >= _bumper3Location.X - 1)
-                {
-                    _velocityZ *= -1;
-                }
-                else
-                {
-                    _velocityX *= -1;
-                    _velocityZ *= -1;
-                }
-                System.Diagnostics.Debug.WriteLine("B3: " + _bumper3Location + " zu " + _pinballLocation);
-                score += 5;
             }
 
             if (Bumper4())
             {
-                if (_pinballLocation.Z <= _bumper4Location.Z + 1 && _pinballLocation.Z >= _bumper4Location.Z - 1)
+                if (Colli != "B4")
                 {
-                    _velocityX *= -1;
-                }
-                else if (_pinballLocation.X <= _bumper4Location.X + 1 && _pinballLocation.X >= _bumper4Location.X - 1)
-                {
-                    _velocityZ *= -1;
-                }
-                else
-                {
-                    _velocityX *= -1;
-                    _velocityZ *= -1;
-                }
+                    Colli = "B4";
+                    if (_pinballLocation.Z <= _bumper4Location.Z + 1 && _pinballLocation.Z >= _bumper4Location.Z - 1)
+                    {
+                        _velocityX *= -1;
+                    }
+                    else if (_pinballLocation.X <= _bumper4Location.X + 1 && _pinballLocation.X >= _bumper4Location.X - 1)
+                    {
+                        _velocityZ *= -1;
+                    }
+                    else
+                    {
+                        _velocityX *= -1;
+                        _velocityZ *= -1;
+                    }
 
-                score += 5;
-                System.Diagnostics.Debug.WriteLine("B4: " + _bumper4Location + " zu " + _pinballLocation);
+                    score += 5;
+                    System.Diagnostics.Debug.WriteLine("B4: " + _bumper4Location + " zu " + _pinballLocation);
+                }
             }
             #endregion
 
             #region MovingBumper-Abfragen
             if (MovingBumper1())
             {
-                if (_pinballLocation.Z <= _movingBumper1Location.Z + 1 && _pinballLocation.Z >= _movingBumper1Location.Z - 1)
+                if (Colli != "M1")
                 {
-                    _velocityX *= -1.1f;
+                    Colli = "M1";
+                    if (_pinballLocation.Z <= _movingBumper1Location.Z + 1 && _pinballLocation.Z >= _movingBumper1Location.Z - 1)
+                    {
+                        _velocityX *= -1.1f;
+                    }
+                    else if (_pinballLocation.X <= _movingBumper1Location.X + 1 && _pinballLocation.X >= _movingBumper1Location.X - 1)
+                    {
+                        _velocityZ *= -1.1f;
+                    }
+                    else
+                    {
+                        _velocityX *= -1.1f;
+                        _velocityZ *= -1.1f;
+                    }
+                    System.Diagnostics.Debug.WriteLine("M1: " + _movingBumper1Location + " zu " + _pinballLocation);
+                    score += 15;
                 }
-                else if (_pinballLocation.X <= _movingBumper1Location.X + 1 && _pinballLocation.X >= _movingBumper1Location.X - 1)
-                {
-                    _velocityZ *= -1.1f;
-                }
-                else
-                {
-                    _velocityX *= -1.1f;
-                    _velocityZ *= -1.1f;
-                }
-                System.Diagnostics.Debug.WriteLine("M1: "+_movingBumper1Location + " zu " + _pinballLocation);
-                score += 15;
             }
 
             if (MovingBumper2())
             {
-                if (_pinballLocation.Z <= _movingBumper2Location.Z + 1 && _pinballLocation.Z >= _movingBumper2Location.Z - 1)
+                if (Colli != "M2")
                 {
-                    _velocityX *= -1.1f;
+                    Colli = "M2";
+
+                    if (_pinballLocation.Z <= _movingBumper2Location.Z + 1 && _pinballLocation.Z >= _movingBumper2Location.Z - 1)
+                    {
+                        _velocityX *= -1.1f;
+                    }
+                    else if (_pinballLocation.X <= _movingBumper2Location.X + 1 && _pinballLocation.X >= _movingBumper2Location.X - 1)
+                    {
+                        _velocityZ *= -1.1f;
+                    }
+                    else
+                    {
+                        _velocityX *= -1.1f;
+                        _velocityZ *= -1.1f;
+                    }
+                    System.Diagnostics.Debug.WriteLine("M2: " + _movingBumper2Location + " zu " + _pinballLocation);
+                    score += 15;
                 }
-                else if (_pinballLocation.X <= _movingBumper2Location.X + 1 && _pinballLocation.X >= _movingBumper2Location.X - 1)
-                {
-                    _velocityZ *= -1.1f;
-                }
-                else
-                {
-                    _velocityX *= -1.1f;
-                    _velocityZ *= -1.1f;
-                }
-                System.Diagnostics.Debug.WriteLine("M2: " + _movingBumper2Location + " zu " + _pinballLocation);
-                score += 15;
             }
             #endregion
 
