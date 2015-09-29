@@ -40,7 +40,8 @@ namespace PinballProjekt
         Vector3 _startRampeLocation = new Vector3(0f, -1f, -1f);
         Vector3 _grenzeRechtsLocation = new Vector3(-18f, -1f, -44f);
         Vector3 _grenzeLinksLocation = new Vector3(+18f, -1f, -44f);
-        Vector3 _movingBumper1Location = new Vector3(-15f, -1f, 0f);
+        Vector3 _movingBumper1Location = new Vector3(15f, -1f, 5f);
+        Vector3 _movingBumper2Location = new Vector3(-15f, -1f, -25f);
         //Vector3 _bumperWand1Location = new Vector3(0f, -1f, 0);
         #endregion
 
@@ -59,6 +60,7 @@ namespace PinballProjekt
         Model _grenzeRechts;
         Model _grenzeLinks;
         Model _movingBumper1;
+        Model _movingBumper2;
         //Model _bumperWand1;
         #endregion
 
@@ -127,6 +129,7 @@ namespace PinballProjekt
             _grenzeRechts = Content.Load<Model>("GrenzeRechts");
             _grenzeLinks = Content.Load<Model>("GrenzeLinks");
             _movingBumper1 = Content.Load<Model>("Bumper");
+            _movingBumper2 = Content.Load<Model>("Bumper");
             //_bumperWand1 = Content.Load<Model>("BumperWand");
             #endregion
 
@@ -314,6 +317,12 @@ namespace PinballProjekt
 
             #region MovingBumper-Abfragen
             if (MovingBumper1())
+            {
+                _velocityZ *= -1.1f;
+                score += 15;
+            }
+
+            if (MovingBumper2())
             {
                 _velocityZ *= -1.1f;
                 score += 15;
@@ -572,6 +581,7 @@ namespace PinballProjekt
             System.Diagnostics.Debug.WriteLine(_velocityZ);
 
             moveMovingBumper1();
+            moveMovingBumper2();
 
             _pinballLocation.Z += _velocityZ;
             _pinballLocation.X += _velocityX;
@@ -825,61 +835,35 @@ namespace PinballProjekt
             }
             return false;
         }
-        #endregion
 
-        #region Bumper-Bool-Funktionen
-        /*private bool Bumper()
+        private bool MovingBumper2()
         {
-            
-            if (_pinballLocation.Z <= 22f && _pinballLocation.Z >= 18f)
+            if (_pinballLocation.X >= _movingBumper2Location.X)
             {
-                if (_pinballLocation.X <= 2f && _pinballLocation.X >= -2f)
-                {
-                    //BumperReaktion();
-                    return true;
-                }
+                Xdis = _pinballLocation.X - _movingBumper2Location.X;
+            }
+            else
+            {
+                Xdis = _movingBumper2Location.X - _pinballLocation.X;
+            }
+
+            if (_pinballLocation.Z >= _movingBumper2Location.Z)
+            {
+                Zdis = _pinballLocation.Z - _movingBumper2Location.Z;
+            }
+            else
+            {
+                Zdis = _movingBumper2Location.Z - _pinballLocation.Z;
+            }
+
+            distance = Math.Sqrt(Math.Pow(Xdis, 2) + Math.Pow(Zdis, 2)) - 3;
+
+            if (distance <= 0)
+            {
+                return true;
             }
             return false;
         }
-
-        private bool Bumper2()
-        {
-            if (_pinballLocation.Z <= 27f && _pinballLocation.Z >= 23f)
-            {
-                if (_pinballLocation.X <= 10f && _pinballLocation.X >= 6f)
-                {
-                    //BumperReaktion();
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private bool Bumper3()
-        {
-            if (_pinballLocation.Z <= 27f && _pinballLocation.Z >= 23f)
-            {
-                if (_pinballLocation.X >= -10f && _pinballLocation.X <= -6f)
-                {
-                    //BumperReaktion();
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private bool Bumper4()
-        {
-            if (_pinballLocation.Z <= 32f && _pinballLocation.Z >= 28f)
-            {
-                if (_pinballLocation.X <= 2f && _pinballLocation.X >= -2f)
-                {
-                    //BumperReaktion();
-                    return true;
-                }
-            }
-            return false;
-        }*/
         #endregion
 
         #region Grenzen-Bool-Funktionen
@@ -1018,6 +1002,36 @@ namespace PinballProjekt
         }
         #endregion
 
+        #region MovingBumper2-Funktion
+        bool _movingBumper2Right = true;
+        bool _movingBumper2Left = false;
+
+        private void moveMovingBumper2()
+        {
+            if (_movingBumper2Location.X <= -15f)
+            {
+                _movingBumper2Right = true;
+                _movingBumper2Left = false;
+            }
+
+            if (_movingBumper2Location.X >= 15f)
+            {
+                _movingBumper2Left = true;
+                _movingBumper2Right = false;
+            }
+
+            if (_movingBumper2Right)
+            {
+                _movingBumper2Location.X += 0.2f;
+            }
+
+            if (_movingBumper2Left)
+            {
+                _movingBumper2Location.X -= 0.2f;
+            }
+        }
+        #endregion
+
         /*public Rectangle Box(int x, int y, int breite, int höhe)
         {
             Rectangle collision = new Rectangle(x, y, breite, höhe);
@@ -1046,6 +1060,7 @@ namespace PinballProjekt
             Matrix _grenzeRechtsMatrix = Matrix.CreateTranslation(_grenzeRechtsLocation);
             Matrix _grenzeLinksMatrix = Matrix.CreateTranslation(_grenzeLinksLocation);
             Matrix _movingBumper1Matrix = Matrix.CreateTranslation(_movingBumper1Location);
+            Matrix _movingBumper2Matrix = Matrix.CreateTranslation(_movingBumper2Location);
             //Matrix _bumperWand1Matrix = Matrix.CreateTranslation(_bumperWand1Location);
 
             DrawModel(_platte, _platteMatrix, viewMatrix, projectionMatrix);
@@ -1062,6 +1077,7 @@ namespace PinballProjekt
             DrawModel(_grenzeRechts, _grenzeRechtsMatrix, viewMatrix, projectionMatrix);
             DrawModel(_grenzeLinks, _grenzeLinksMatrix, viewMatrix, projectionMatrix);
             DrawModel(_movingBumper1, _movingBumper1Matrix, viewMatrix, projectionMatrix);
+            DrawModel(_movingBumper2, _movingBumper2Matrix, viewMatrix, projectionMatrix);
             //DrawModel(_bumperWand1, _bumperWand1Matrix, viewMatrix, projectionMatrix);
 
             /*foreach (ModelMesh mesh in _pinball.Meshes)
