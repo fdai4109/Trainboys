@@ -30,7 +30,7 @@ namespace PinballProjekt
         Vector3 camPosition;
         Vector3 _platteLocation = new Vector3(0f, 0f, 0f);
         //Vector3 _pinballLocation = new Vector3(0f, 0f, 35f); 
-        Vector3 _pinballLocation = new Vector3(-23f, 0f, 48f);
+        Vector3 _pinballLocation = new Vector3(-20f, 0f, 48f);
         //Vector3 _pinballLocation = new Vector3(0f, 0f, 0f);
         Vector3 _triggerRLocation = new Vector3(-10f, -1f, -40f);
         Vector3 _triggerLLocation = new Vector3(10f, -1f, -40f);
@@ -81,6 +81,7 @@ namespace PinballProjekt
         //float _streckeY;
 
         float _timer = 0f;
+        float _startTimer = 0f;
         //float _velocityX = 0.3f;
         float _velocityX = 0f;
         //float _velocityZ = 1f;
@@ -89,6 +90,8 @@ namespace PinballProjekt
         float _triggerLvelocityZ = 0.2f;
         float _triggerRvelocityX = 0.2f;
         float _triggerLvelocityX = 0.2f;
+        float _startVelocityX = 0f;
+        int i = 0;
         #endregion
 
         #region Bools
@@ -185,7 +188,7 @@ namespace PinballProjekt
              _velocityY = _streckeY / _timer;*/
 
             _timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
+            _startTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (_timer >= 200f)
             {
                 //_pinballLocationOLD = _pinballLocation;
@@ -194,6 +197,12 @@ namespace PinballProjekt
                     _velocityZ -= 0.07f;
                 }
                 _timer = 0f;
+            }
+            
+
+            if (_startVelocityX >= 0.5f)
+            {
+                _startVelocityX = 0.5f;
             }
 
             #region Geschwindigkeitsbegrenzung der Kugel
@@ -486,7 +495,7 @@ namespace PinballProjekt
             if(StartRampeLinks())
             {
                 _velocityX = -0.05f;
-                _velocityZ = -0.1f;
+                _velocityZ = -_startVelocityX;
             }
             #endregion
 
@@ -567,9 +576,22 @@ namespace PinballProjekt
             #endregion
 
             #region Start mit Leertaste
-            if(Keyboard.GetState().IsKeyDown(Keys.Space))
+            if (_startTimer >= 1f)
             {
-                _velocityX += 0.3f;
+                if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                {
+                    _startVelocityX += 0.1f;
+                    i = 1;
+                }
+                _startTimer = 0f;
+            }
+            if (Keyboard.GetState().IsKeyUp(Keys.Space))
+            {
+                if (i == 1)
+                {
+                    _velocityX = _startVelocityX;
+                    i++;
+                }
             }
             #endregion
             //Eine Steuerung für sich auswählen und andere komplett auskommentieren.
