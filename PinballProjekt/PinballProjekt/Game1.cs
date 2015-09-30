@@ -40,7 +40,7 @@ namespace PinballProjekt
         Vector3 _bumper4Location = new Vector3(0f, 0f, 30f);
         Vector3 _sideBumperLLocation = new Vector3(15.5f, -1f, -10f);
         Vector3 _sideBumperRLocation = new Vector3(-15.5f, -1f, -10f);
-        Vector3 _startRampeLocation = new Vector3(0f, -1f, -1f);
+        Vector3 _startRampeLocation = new Vector3(21.5f, -1f, 42f);
         Vector3 _grenzeRechtsLocation = new Vector3(-18f, -1f, -44f);
         Vector3 _grenzeLinksLocation = new Vector3(+18f, -1f, -44f);
         Vector3 _movingBumper1Location = new Vector3(15f, -1f, 5f);
