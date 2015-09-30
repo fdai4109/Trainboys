@@ -38,8 +38,8 @@ namespace PinballProjekt
         Vector3 _bumper2Location = new Vector3(8f, 0f, 25f);
         Vector3 _bumper3Location = new Vector3(-8f, 0f, 25f);
         Vector3 _bumper4Location = new Vector3(0f, 0f, 30f);
-        Vector3 _sideBumperLLocation = new Vector3(15f, -1f, -10f);
-        Vector3 _sideBumperRLocation = new Vector3(-15f, -1f, -10f);
+        Vector3 _sideBumperLLocation = new Vector3(15.5f, -1f, -10f);
+        Vector3 _sideBumperRLocation = new Vector3(-15.5f, -1f, -10f);
         Vector3 _startRampeLocation = new Vector3(0f, -1f, -1f);
         Vector3 _grenzeRechtsLocation = new Vector3(-18f, -1f, -44f);
         Vector3 _grenzeLinksLocation = new Vector3(+18f, -1f, -44f);
@@ -284,9 +284,9 @@ namespace PinballProjekt
                 if (Colli != "S1")
                 {
                     Colli = "S1";
-                    if (_pinballLocation.Z < _sideBumperLLocation.Z)
+                    if (_pinballLocation.Z <= -5 && _pinballLocation.Z >= -15)
                     {
-                        if (Math.Abs(_pinballLocation.Z - _pinballLocationOLD.Z) > Math.Abs(_pinballLocation.X - _pinballLocationOLD.X))
+                        if (Math.Round(_pinballLocation.X) != 14 && Math.Round(_pinballLocation.X) != 17)
                         {
                             _velocityZ *= -1;
                         }
@@ -295,19 +295,9 @@ namespace PinballProjekt
                             _velocityX *= -1;
                         }
                     }
-                    else if (_pinballLocation.Z > _sideBumperLLocation.Z)
-                    {
-                        if (Math.Abs(_pinballLocation.Z - _pinballLocationOLD.Z) < Math.Abs(_pinballLocation.X - _pinballLocationOLD.X))
-                        {
-                            _velocityZ *= -1;
-                        }
-                        else
-                        {
-                            _velocityX *= -1;
-                        }
-                    }
+                    
                     score += 10;
-                    System.Diagnostics.Debug.WriteLine("S2: " + _sideBumperLLocation + " zu " + _pinballLocation);
+                    System.Diagnostics.Debug.WriteLine("S1: " + _sideBumperLLocation + " zu " + _pinballLocation);
                 }
             }
 
@@ -317,20 +307,9 @@ namespace PinballProjekt
                 {
                     Colli = "S2";
 
-                    if (_pinballLocation.Z < _sideBumperLLocation.Z)
+                    if (_pinballLocation.Z <= -5 && _pinballLocation.Z >= -15)
                     {
-                        if (Math.Abs(_pinballLocation.Z - _pinballLocationOLD.Z) > Math.Abs(_pinballLocation.X - _pinballLocationOLD.X))
-                        {
-                            _velocityZ *= -1;
-                        }
-                        else
-                        {
-                            _velocityX *= -1;
-                        }
-                    }
-                    else if (_pinballLocation.Z > _sideBumperLLocation.Z)
-                    {
-                        if (Math.Abs(_pinballLocation.Z - _pinballLocationOLD.Z) < Math.Abs(_pinballLocation.X - _pinballLocationOLD.X))
+                        if (Math.Round(_pinballLocation.X) != -14 && Math.Round(_pinballLocation.X) != -17)
                         {
                             _velocityZ *= -1;
                         }
@@ -800,7 +779,7 @@ namespace PinballProjekt
         #region Sidebumper-Bool-Funktionen
         private bool LsideBumper()
         {
-            if (_pinballLocation.Z <= -5 && _pinballLocation.Z >= -15 && _pinballLocation.X >= 13.5 && _pinballLocation.X <= 16.5)
+            if (_pinballLocation.Z <= -5 && _pinballLocation.Z >= -15 && _pinballLocation.X >= 14 && _pinballLocation.X <= 17)
             {
                 return true;
             }
@@ -809,7 +788,7 @@ namespace PinballProjekt
 
         private bool RsideBumper()
         {
-            if (_pinballLocation.Z <= -5 && _pinballLocation.Z >= -15 && _pinballLocation.X >= -16.5 && _pinballLocation.X <= -13.5)
+            if (_pinballLocation.Z <= -5 && _pinballLocation.Z >= -15 && _pinballLocation.X >= -17 && _pinballLocation.X <= -14)
             {
                 return true;
             }
