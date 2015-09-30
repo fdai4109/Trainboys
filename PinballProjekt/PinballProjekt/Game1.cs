@@ -14,11 +14,12 @@ namespace PinballProjekt
         private SpriteFont font;
         private int score = 0;
 
+        #region Kollisonsvariablen
         double distance;
         double Xdis;
         double Zdis;
         String Colli;
-
+        #endregion
 
         Matrix projectionMatrix;
         Matrix viewMatrix;
@@ -282,11 +283,7 @@ namespace PinballProjekt
                 if (Colli != "S1")
                 {
                     Colli = "S1";
-                    if (_pinballLocation.Z <= -5)
-                    {
-                        _velocityZ *= -1;
-                    }
-                    if (_pinballLocation.Z >= -15)
+                    if (Math.Abs(_pinballLocation.Z - _pinballLocationOLD.Z) > Math.Abs(_pinballLocation.X -_pinballLocationOLD.X))
                     {
                         _velocityZ *= -1;
                     }
@@ -294,6 +291,7 @@ namespace PinballProjekt
                     {
                         _velocityX *= -1;
                     }
+                    
                     score += 10;
                     System.Diagnostics.Debug.WriteLine("S2: " + _sideBumperLLocation + " zu " + _pinballLocation);
                 }
@@ -304,11 +302,8 @@ namespace PinballProjekt
                 if (Colli != "S2")
                 {
                     Colli = "S2";
-                    if (_pinballLocation.Z <= -5)
-                    {
-                        _velocityZ *= -1;
-                    }
-                    if (_pinballLocation.Z >= -15)
+
+                    if (Math.Abs(_pinballLocation.Z - _pinballLocationOLD.Z) > Math.Abs(_pinballLocation.X - _pinballLocationOLD.X))
                     {
                         _velocityZ *= -1;
                     }
@@ -316,6 +311,7 @@ namespace PinballProjekt
                     {
                         _velocityX *= -1;
                     }
+
                     score += 10;
                     System.Diagnostics.Debug.WriteLine("S2: " + _sideBumperRLocation + " zu " + _pinballLocation);
                 }
@@ -776,7 +772,7 @@ namespace PinballProjekt
         #region Sidebumper-Bool-Funktionen
         private bool LsideBumper()
         {
-            if (_pinballLocation.Z <= -6 && _pinballLocation.Z >= -14 && _pinballLocation.X >= 13 && _pinballLocation.X <= 17)
+            if (_pinballLocation.Z <= -5 && _pinballLocation.Z >= -15 && _pinballLocation.X >= 13.5 && _pinballLocation.X <= 16.5)
             {
                 return true;
             }
@@ -785,7 +781,7 @@ namespace PinballProjekt
 
         private bool RsideBumper()
         {
-            if (_pinballLocation.Z <= -6 && _pinballLocation.Z >= -14 && _pinballLocation.X >= -17 && _pinballLocation.X <= -13)
+            if (_pinballLocation.Z <= -5 && _pinballLocation.Z >= -15 && _pinballLocation.X >= -16.5 && _pinballLocation.X <= -13.5)
             {
                 return true;
             }
