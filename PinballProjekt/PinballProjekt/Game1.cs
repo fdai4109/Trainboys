@@ -29,8 +29,8 @@ namespace PinballProjekt
         Vector3 camTarget;
         Vector3 camPosition;
         Vector3 _platteLocation = new Vector3(0f, 0f, 0f);
-        Vector3 _pinballLocation = new Vector3(0f, 0f, 35f);
-        //Vector3 _pinballLocation = new Vector3(-23f, 0f, -48f);
+        //Vector3 _pinballLocation = new Vector3(0f, 0f, 35f); 
+        Vector3 _pinballLocation = new Vector3(-23f, 0f, 48f);
         //Vector3 _pinballLocation = new Vector3(0f, 0f, 0f);
         Vector3 _triggerRLocation = new Vector3(-10f, -1f, -40f);
         Vector3 _triggerLLocation = new Vector3(10f, -1f, -40f);
@@ -40,7 +40,7 @@ namespace PinballProjekt
         Vector3 _bumper4Location = new Vector3(0f, 0f, 30f);
         Vector3 _sideBumperLLocation = new Vector3(15.5f, -1f, -10f);
         Vector3 _sideBumperRLocation = new Vector3(-15.5f, -1f, -10f);
-        Vector3 _startRampeLocation = new Vector3(21.5f, -1f, 42f);
+        Vector3 _startRampeLocation = new Vector3(21f, -1f, 41f);
         Vector3 _grenzeRechtsLocation = new Vector3(-18f, -1f, -44f);
         Vector3 _grenzeLinksLocation = new Vector3(+18f, -1f, -44f);
         Vector3 _movingBumper1Location = new Vector3(15f, -1f, 5f);
@@ -81,8 +81,10 @@ namespace PinballProjekt
         //float _streckeY;
 
         float _timer = 0f;
-        float _velocityX = 0.3f;
-        float _velocityZ = 1f;
+        //float _velocityX = 0.3f;
+        float _velocityX = 0f;
+        //float _velocityZ = 1f;
+        float _velocityZ = 0f;
         float _triggerRvelocityZ = 0.2f;
         float _triggerLvelocityZ = 0.2f;
         float _triggerRvelocityX = 0.2f;
@@ -473,26 +475,26 @@ namespace PinballProjekt
             /*if (StartRampeUnten())
             {
                 _velocityZ = 0.3f;
-            }
+            }*/
 
             if(StartRampeOben())
             {
                 _velocityZ = 0f;
-                _velocityX = 0.3f;
+                //_velocityX = 0f;
             }
 
             if(StartRampeLinks())
             {
-                _velocityX = -0.01f;
+                _velocityX = -0.05f;
                 _velocityZ = -0.1f;
-            }*/
+            }
             #endregion
 
             #region Mauern Startrampe
-            if (rechteWand())
+            /*if (rechteWand())
             {
                 _velocityX *= -1;
-            }
+            }*/
 
             if(obereWand())
             {
@@ -550,7 +552,7 @@ namespace PinballProjekt
                 camPosition.Z -= 1f;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            /*if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 orbit = !orbit;
             }
@@ -560,10 +562,16 @@ namespace PinballProjekt
             {
                 Matrix rotationMatrix = Matrix.CreateRotationY(MathHelper.ToRadians(1f));
                 camPosition = Vector3.Transform(camPosition, rotationMatrix);
-            }
+            }*/
             viewMatrix = Matrix.CreateLookAt(camPosition, camTarget, Vector3.Up);
             #endregion
 
+            #region Start mit Leertaste
+            if(Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                _velocityX += 0.3f;
+            }
+            #endregion
             //Eine Steuerung für sich auswählen und andere komplett auskommentieren.
             #region Triggerbewegung - Tastatur
             /*            
@@ -1036,7 +1044,7 @@ namespace PinballProjekt
         #endregion
 
         #region Startrampe-Bool-Funktionen
-        private bool StartRampeUnten()
+       /* private bool StartRampeUnten()
         {
             if (_pinballLocation.X >= -23 && _pinballLocation.X <= -22)
             {
@@ -1046,7 +1054,7 @@ namespace PinballProjekt
                 }
             }
             return false;
-        }
+        }*/
 
         private bool StartRampeOben()
         {
@@ -1074,7 +1082,7 @@ namespace PinballProjekt
         #endregion
 
         #region Startrampenbegrenzung Bool-Funktionen
-        private bool rechteWand()
+       /* private bool rechteWand()
         {
             if(_pinballLocation.X >= -20 && _pinballLocation.X <= -21)
             {
@@ -1084,13 +1092,13 @@ namespace PinballProjekt
                 }
             }
             return false;
-        }
+        }*/
 
         private bool obereWand()
         {
-            if(_pinballLocation.X <= 20 && _pinballLocation.X >= -20)
+            if(_pinballLocation.X <= 20 && _pinballLocation.X >= -23)
             {
-                if(_pinballLocation.Z >= 45 && _pinballLocation.Z <= 46)
+                if(_pinballLocation.Z >= 44.5f && _pinballLocation.Z <= 46.5f)
                 {
                     return true;
                 }
@@ -1100,9 +1108,9 @@ namespace PinballProjekt
 
         private bool linkeWand()
         {
-            if(_pinballLocation.X >= 20 && _pinballLocation.X <= 21)
+            if(_pinballLocation.X >= 20 && _pinballLocation.X <= 22)
             {
-                if(_pinballLocation.Z <= 45 && _pinballLocation.Z >= 36)
+                if(_pinballLocation.Z <= 45 && _pinballLocation.Z >= 34)
                 {
                     return true;
                 }
