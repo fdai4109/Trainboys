@@ -282,8 +282,20 @@ namespace PinballProjekt
                 if (Colli != "S1")
                 {
                     Colli = "S1";
-                    _velocityX *= -1;
+                    if (_pinballLocation.Z <= -5)
+                    {
+                        _velocityZ *= -1;
+                    }
+                    if (_pinballLocation.Z >= -15)
+                    {
+                        _velocityZ *= -1;
+                    }
+                    else
+                    {
+                        _velocityX *= -1;
+                    }
                     score += 10;
+                    System.Diagnostics.Debug.WriteLine("S2: " + _sideBumperLLocation + " zu " + _pinballLocation);
                 }
             }
 
@@ -292,8 +304,20 @@ namespace PinballProjekt
                 if (Colli != "S2")
                 {
                     Colli = "S2";
-                    _velocityX *= -1;
+                    if (_pinballLocation.Z <= -5)
+                    {
+                        _velocityZ *= -1;
+                    }
+                    if (_pinballLocation.Z >= -15)
+                    {
+                        _velocityZ *= -1;
+                    }
+                    else
+                    {
+                        _velocityX *= -1;
+                    }
                     score += 10;
+                    System.Diagnostics.Debug.WriteLine("S2: " + _sideBumperRLocation + " zu " + _pinballLocation);
                 }
             }
             #endregion
