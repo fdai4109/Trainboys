@@ -277,21 +277,35 @@ namespace PinballProjekt
             }
             #endregion
 
+            //Denkfehler: Wieso kommt es nie zur Änderung der _velocityX
             #region SideBumper-Abfragen
             if (LsideBumper())
             {
                 if (Colli != "S1")
                 {
                     Colli = "S1";
-                    if (Math.Abs(_pinballLocation.Z - _pinballLocationOLD.Z) > Math.Abs(_pinballLocation.X -_pinballLocationOLD.X))
+                    if (_pinballLocation.Z < _sideBumperLLocation.Z)
                     {
-                        _velocityZ *= -1;
+                        if (Math.Abs(_pinballLocation.Z - _pinballLocationOLD.Z) > Math.Abs(_pinballLocation.X - _pinballLocationOLD.X))
+                        {
+                            _velocityZ *= -1;
+                        }
+                        else
+                        {
+                            _velocityX *= -1;
+                        }
                     }
-                    else
+                    else if (_pinballLocation.Z > _sideBumperLLocation.Z)
                     {
-                        _velocityX *= -1;
+                        if (Math.Abs(_pinballLocation.Z - _pinballLocationOLD.Z) < Math.Abs(_pinballLocation.X - _pinballLocationOLD.X))
+                        {
+                            _velocityZ *= -1;
+                        }
+                        else
+                        {
+                            _velocityX *= -1;
+                        }
                     }
-                    
                     score += 10;
                     System.Diagnostics.Debug.WriteLine("S2: " + _sideBumperLLocation + " zu " + _pinballLocation);
                 }
@@ -303,13 +317,27 @@ namespace PinballProjekt
                 {
                     Colli = "S2";
 
-                    if (Math.Abs(_pinballLocation.Z - _pinballLocationOLD.Z) > Math.Abs(_pinballLocation.X - _pinballLocationOLD.X))
+                    if (_pinballLocation.Z < _sideBumperLLocation.Z)
                     {
-                        _velocityZ *= -1;
+                        if (Math.Abs(_pinballLocation.Z - _pinballLocationOLD.Z) > Math.Abs(_pinballLocation.X - _pinballLocationOLD.X))
+                        {
+                            _velocityZ *= -1;
+                        }
+                        else
+                        {
+                            _velocityX *= -1;
+                        }
                     }
-                    else
+                    else if (_pinballLocation.Z > _sideBumperLLocation.Z)
                     {
-                        _velocityX *= -1;
+                        if (Math.Abs(_pinballLocation.Z - _pinballLocationOLD.Z) < Math.Abs(_pinballLocation.X - _pinballLocationOLD.X))
+                        {
+                            _velocityZ *= -1;
+                        }
+                        else
+                        {
+                            _velocityX *= -1;
+                        }
                     }
 
                     score += 10;
