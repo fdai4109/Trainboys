@@ -1036,7 +1036,6 @@ namespace PinballProjekt
         #endregion
 
         #region Startrampe-Bool-Funktionen
-        /*
         private bool StartRampeUnten()
         {
             if (_pinballLocation.X >= -23 && _pinballLocation.X <= -22)
@@ -1071,15 +1070,15 @@ namespace PinballProjekt
                 }
             }
             return false;
-        }*/
+        }
         #endregion
 
         #region Startrampenbegrenzung Bool-Funktionen
         private bool rechteWand()
         {
-            if(_pinballLocation.X >= -21 && _pinballLocation.X <= -22)
+            if(_pinballLocation.X >= -20 && _pinballLocation.X <= -21)
             {
-                if(_pinballLocation.Y >= - 23 && _pinballLocation.Y <= 46)
+                if(_pinballLocation.Z >= - 23 && _pinballLocation.Z <= 45)
                 {
                     return true;
                 }
@@ -1089,9 +1088,9 @@ namespace PinballProjekt
 
         private bool obereWand()
         {
-            if(_pinballLocation.X <= 20 && _pinballLocation.X >= -21)
+            if(_pinballLocation.X <= 20 && _pinballLocation.X >= -20)
             {
-                if(_pinballLocation.Y >= 46 && _pinballLocation.Y <= 47)
+                if(_pinballLocation.Z >= 45 && _pinballLocation.Z <= 46)
                 {
                     return true;
                 }
@@ -1101,9 +1100,9 @@ namespace PinballProjekt
 
         private bool linkeWand()
         {
-            if(_pinballLocation.X >= 21 && _pinballLocation.X <= 22)
+            if(_pinballLocation.X >= 20 && _pinballLocation.X <= 21)
             {
-                if(_pinballLocation.Y <= 46 && _pinballLocation.Y >= 36)
+                if(_pinballLocation.Z <= 45 && _pinballLocation.Z >= 36)
                 {
                     return true;
                 }
