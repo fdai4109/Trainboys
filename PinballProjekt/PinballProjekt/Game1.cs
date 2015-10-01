@@ -14,7 +14,7 @@ namespace PinballProjekt
         private SpriteFont font;
         private int score = 0;
         private int lives = 3;
-        
+        private int highscore;
 
         #region Kollisonsvariablen
         double distance;
@@ -299,8 +299,12 @@ namespace PinballProjekt
                 else if(lives == 1)
                 {
                     lives = 3;
+                    highscore = score; 
                     score = 0;
+
                 }
+
+                
             }
             #endregion
             
@@ -1264,6 +1268,7 @@ namespace PinballProjekt
             spriteBatch.Begin();
             spriteBatch.DrawString(font, "Score: " + score, new Vector2(10, 0), Color.Black);
             spriteBatch.DrawString(font, "Lives: " + lives, new Vector2(10, 20), Color.Black);
+            spriteBatch.DrawString(font, "Last Score: " + highscore, new Vector2(1100, 0), Color.Black);
             spriteBatch.End();
 
             Matrix _platteMatrix = Matrix.CreateTranslation(_platteLocation);
