@@ -586,21 +586,24 @@ namespace PinballProjekt
             #endregion
 
             #region Start mit Leertaste
-            if (_startTimer >= 1f)
+            if (_pinballLocation == _pinpallLocationStart)
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                if (_startTimer >= 0.1f)
                 {
-                    _startVelocityX += 0.1f;
-                    i = 1;
+                    if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    {
+                        _startVelocityX += 0.015f;
+                        i = 1;
+                    }
+                    _startTimer = 0f;
                 }
-                _startTimer = 0f;
-            }
-            if (Keyboard.GetState().IsKeyUp(Keys.Space))
-            {
-                if (i == 1)
+                if (Keyboard.GetState().IsKeyUp(Keys.Space))
                 {
-                    _velocityX = _startVelocityX;
-                    i++;
+                    if (i == 1)
+                    {
+                        _velocityX = _startVelocityX;
+                        i++;
+                    }
                 }
             }
             #endregion
