@@ -1091,18 +1091,11 @@ namespace PinballProjekt
             return false;
         }
 
-        private bool GrenzeLinks()
-        {
-            if (_pinballLocation.Z <= -39f && _pinballLocation.X >= 15f && _pinballLocation.X <= 24f)
-            {
-                return true;
-            }
-            return false;
-        }
+    
 
         private bool GrenzeMitte()
         {
-            if(_pinballLocation.Z <= -42f && _pinballLocation.X <= 15f && _pinballLocation.X >= -15f)
+            if(_pinballLocation.Z <= -42f)
             {
                 return true;
             }
