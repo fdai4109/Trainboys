@@ -850,7 +850,7 @@ namespace PinballProjekt
         #region Trigger-Bool-Funktionen
         private bool Rtrigger()
         {
-            if (_pinballLocation.Z <= _triggerRLocation.Z + 1 && _pinballLocation.Z >= _triggerRLocation.Z - 1 && _pinballLocation.X <= _triggerRLocation.X + 5f && _pinballLocation.X >= _triggerRLocation.X - 5)
+            if (_pinballLocation.Z <= _triggerRLocation.Z + 2 && _pinballLocation.Z >= _triggerRLocation.Z - 2 && _pinballLocation.X <= _triggerRLocation.X + 6 && _pinballLocation.X >= _triggerRLocation.X - 6)
             {
                 return true;
             }
@@ -859,7 +859,7 @@ namespace PinballProjekt
 
         private bool Ltrigger()
         {
-            if (_pinballLocation.Z <= _triggerLLocation.Z + 1 && _pinballLocation.Z >= _triggerLLocation.Z - 1 && _pinballLocation.X >= _triggerLLocation.X - 5f && _pinballLocation.X <= _triggerLLocation.X + 5)
+            if (_pinballLocation.Z <= _triggerLLocation.Z + 2 && _pinballLocation.Z >= _triggerLLocation.Z - 2 && _pinballLocation.X >= _triggerLLocation.X - 6 && _pinballLocation.X <= _triggerLLocation.X + 6)
             {
                 return true;
             }
