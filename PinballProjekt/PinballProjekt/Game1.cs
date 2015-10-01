@@ -69,6 +69,7 @@ namespace PinballProjekt
 
         #region Gespeicherte Locations
         Vector3 _collisionPosition;
+        Vector3 _pinpallLocationStart = new Vector3 (-20f, 0f, 48f);
         Vector3 _pinballLocationOLD = new Vector3(5f, 0f, 0f);
         Vector3 _triggerLPressed = new Vector3(10f, -1f, -30f);
         Vector3 _triggerLNormal = new Vector3(10f, -1f, -40f);
@@ -92,6 +93,7 @@ namespace PinballProjekt
         float _triggerLvelocityX = 0.2f;
         float _startVelocityX = 0f;
         int i = 0;
+        int closedRamp = 20;
         #endregion
 
         #region Bools
@@ -281,14 +283,16 @@ namespace PinballProjekt
             if(GrenzeMitte())
             {
                 Colli = "null";
-                _pinballLocation = _pinballLocationOLD;
+                _pinballLocation = _pinpallLocationStart;
                 score = 0;
-                _velocityX = 0.1f;
+                i = 0;
+                closedRamp = 20;
+                _velocityX = 0;
                 _velocityZ = 0;
             }
             #endregion
+            
 
-            //Denkfehler: Wieso kommt es nie zur Änderung der _velocityX
             #region SideBumper-Abfragen
             if (LsideBumper())
             {
@@ -510,12 +514,18 @@ namespace PinballProjekt
                 _velocityZ *= -1;
             }
 
-            if(linkeWand())
+            /*if(linkeWand())
             {
                 _velocityX *= -1;
-            }
+            }*/
             #endregion
 
+            #region Schließen der Rampe
+            if (_pinballLocation.Z <= 40)
+            {
+                closedRamp = 25;
+            }
+            #endregion
             /*if (IsCollision(_pinball, _pinballMatrix, _platte, _platteMatrix))
             {
                 _pinballLocation += einfall(_pinballLocationOLD, _collisionPosition);
@@ -1080,7 +1090,7 @@ namespace PinballProjekt
 
         private bool StartRampeOben()
         {
-            if (_pinballLocation.X >= -23 && _pinballLocation.X <= 20)
+            if (_pinballLocation.X >= -23 && _pinballLocation.X <= closedRamp)
             {
                 if (_pinballLocation.Z <= 48 && _pinballLocation.Z >= 47)
                 {
@@ -1118,7 +1128,7 @@ namespace PinballProjekt
 
         private bool obereWand()
         {
-            if(_pinballLocation.X <= 20 && _pinballLocation.X >= -23)
+            if(_pinballLocation.X <= closedRamp && _pinballLocation.X >= -23)
             {
                 if(_pinballLocation.Z >= 44.5f && _pinballLocation.Z <= 46.5f)
                 {
