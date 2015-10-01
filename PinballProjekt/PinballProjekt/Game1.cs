@@ -13,6 +13,8 @@ namespace PinballProjekt
 
         private SpriteFont font;
         private int score = 0;
+        private int lives = 3;
+        
 
         #region Kollisonsvariablen
         double distance;
@@ -284,11 +286,21 @@ namespace PinballProjekt
             {
                 Colli = "null";
                 _pinballLocation = _pinpallLocationStart;
-                score = 0;
                 i = 0;
                 closedRamp = 20;
                 _velocityX = 0;
                 _velocityZ = 0;
+
+                if(lives > 1 )
+                {
+                    lives -= 1;
+                }
+
+                else if(lives == 1)
+                {
+                    lives = 3;
+                    score = 0;
+                }
             }
             #endregion
             
@@ -1250,7 +1262,8 @@ namespace PinballProjekt
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "Score: " + score, new Vector2(0, 0), Color.Black);
+            spriteBatch.DrawString(font, "Score: " + score, new Vector2(10, 0), Color.Black);
+            spriteBatch.DrawString(font, "Lives: " + lives, new Vector2(10, 20), Color.Black);
             spriteBatch.End();
 
             Matrix _platteMatrix = Matrix.CreateTranslation(_platteLocation);
