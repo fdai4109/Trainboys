@@ -530,10 +530,10 @@ namespace PinballProjekt
                 _velocityZ *= -1;
             }
 
-            /*if(linkeWand())
+            if(linkeWand())
             {
                 _velocityX *= -1;
-            }*/
+            }
             #endregion
 
             #region Schließen der Rampe
