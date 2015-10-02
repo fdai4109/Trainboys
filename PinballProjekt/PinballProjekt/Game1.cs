@@ -68,9 +68,6 @@ namespace PinballProjekt
         #endregion
 
         #region Floats
-        //float _streckeX;
-        //float _streckeY;
-
         float _timer = 0f;
         float _startTimer = 0f;
         float _velocityX = 0f;
