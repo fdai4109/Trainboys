@@ -210,7 +210,6 @@ namespace PinballProjekt
             #endregion
 
             #region Grenze Abfragen
-
             if(GrenzeMitte())
             {
                 Colli = "null";
@@ -230,14 +229,10 @@ namespace PinballProjekt
                     lives = 3;
                     highscore = score; 
                     score = 0;
-
-                }
-
-                
+                }                
             }
             #endregion
             
-
             #region SideBumper-Abfragen
             if (LsideBumper())
             {
@@ -254,8 +249,7 @@ namespace PinballProjekt
                         {
                             _velocityX *= -1;
                         }
-                    }
-                    
+                    }                    
                     score += 10;
                     System.Diagnostics.Debug.WriteLine("S1: " + _sideBumperLLocation + " zu " + _pinballLocation);
                 }
@@ -278,7 +272,6 @@ namespace PinballProjekt
                             _velocityX *= -1;
                         }
                     }
-
                     score += 10;
                     System.Diagnostics.Debug.WriteLine("S2: " + _sideBumperRLocation + " zu " + _pinballLocation);
                 }
@@ -373,7 +366,6 @@ namespace PinballProjekt
                         _velocityX *= -1;
                         _velocityZ *= -1;
                     }
-
                     score += 5;
                     System.Diagnostics.Debug.WriteLine("B4: " + _bumper4Location + " zu " + _pinballLocation);
                 }
@@ -430,7 +422,6 @@ namespace PinballProjekt
             #endregion
 
             #region Startrampe
-
             if(StartRampeOben())
             {
                 _velocityZ = 0f;
@@ -497,7 +488,8 @@ namespace PinballProjekt
                 }
             }
             #endregion
-            //Eine Steuerung für sich auswählen und andere komplett auskommentieren.
+
+            //Eine Steuerung für sich auswählen und andere komplett auskommentieren!
             #region Triggerbewegung - Tastatur
                        
             if (Keyboard.GetState().IsKeyDown(Keys.T))  //Linker Trigger nach oben
@@ -595,12 +587,12 @@ namespace PinballProjekt
                     _triggerLLocation.X -= _triggerLvelocityX;
                 }
             }
-
             #endregion
 
             #region Triggerbewegung - Controller
             //Beide Trigger lassen sich mit dem jeweiligen Thumbstick des Xbox-Controllers steuern.
             //Funktioniert nur, wenn Tastatursteuerung auskommentiert ist.
+            //Nicht an neuste Steuerungsänderung angepasst.
             /*
             if (gamePadState.ThumbSticks.Left.Y >= 0.1f)
             {
@@ -667,7 +659,6 @@ namespace PinballProjekt
             }
             */
             #endregion
-
 
             moveMovingBumper1(); 
             moveMovingBumper2();
@@ -936,9 +927,7 @@ namespace PinballProjekt
                 return true;
             }
             return false;
-        }
-
-    
+        }    
 
         private bool GrenzeMitte()
         {
