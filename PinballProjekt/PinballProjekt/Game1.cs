@@ -1184,7 +1184,7 @@ namespace PinballProjekt
 
         private bool linkeWand()
         {
-            if(_pinballLocation.X >= 20 && _pinballLocation.X <= 22)
+            if(_pinballLocation.X >= 19.5 && _pinballLocation.X <= 20.5)
             {
                 if(_pinballLocation.Z <= 45 && _pinballLocation.Z >= 34)
                 {
