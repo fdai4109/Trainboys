@@ -514,7 +514,7 @@ namespace PinballProjekt
 
             if(StartRampeLinks())
             {
-                _velocityX = -0.05f;
+                _velocityX = -0.2f;
                 _velocityZ = -_startVelocityX;
             }
             #endregion
